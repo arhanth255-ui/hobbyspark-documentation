@@ -1,6 +1,6 @@
 name: Compile
-on: 
-  push: 
+on:
+  push:
     tags:
       - "v*"
 
@@ -12,7 +12,7 @@ jobs:
       - name: Compile
         uses: xu-cheng/latex-action@v4
         with:
-          root-file: main.tex
+          root_file: main.tex
 
       - name: Rename
         run: mv main.pdf HobbySparkDocumentation.pdf
@@ -31,4 +31,4 @@ jobs:
         with:
           tag_name: ${{github.ref_name}}
           files: HobbySparkDocumentation/*
-        
+
