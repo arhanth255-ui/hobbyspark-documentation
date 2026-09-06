@@ -1,0 +1,34 @@
+name: Compile
+on: 
+  push: 
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile
+        uses: xu-cheng/latex-action@v4
+        with:
+          root-file: main.tex
+
+      - name: Rename
+        run: mv main.pdf HobbySparkDocumentation.pdf
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: HobbySparkDocumentation
+          path: HobbySparkDocumentation.pdf
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Show files
+        run: find .
+      - name: Publish Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{github.ref_name}}
+          files: HobbySparkDocumentation/*
+        
