@@ -1,0 +1,12 @@
+*.aux
+*.log
+*.synctex.gz
+*lof
+*.lol
+*.lot
+*.out
+*.toc
+*.pdf
+a.tex
+
+.vscode/

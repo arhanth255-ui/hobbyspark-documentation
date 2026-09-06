@@ -1,0 +1,25 @@
+\chapter{Introduction to the stub}
+\label{chap:stub}
+\section{Introduction}
+The stub plays the most over-looked job --- The job of making Python actually know about the framework. Without the stub, we would not be able to check the program via Python before transpilation happens. This chapter just skims through the details. The next few chapters will deeply explain the internal workings of the stub.
+
+\section{Object oriented programming}
+HobbySpark uses OOP extensively, may it be stub classes, custom tkinter widget classes or even the parser itself, it's all OOP. Check out the implementation of the stub in the \code{stub} folder and look at the number of classes in the various files.
+
+\section{Files}
+If you peeked into the \code{stub} folder, you might have seen that there are a \emph{lot} of files and folders, namely,
+\begin{enumerate}
+
+    \item Errors.py
+    \item Boards.py
+    \item Devices/
+    \item board\_dat/
+
+\end{enumerate}
+
+The next few sections explain each of these files and folders.
+
+\section{Errors.py}
+This file includes all the errors in HobbySpark. We can notice that all of them are technically python exceptions. The constants \code{INSPIRE} and \code{TRACEBACK} are printed along with the error and hint, with a line in between, which answers the question of those two lines that come in all the errors. 
+
+Evidently, we can see a dictionary of all the error class names to error number/ID, which answers the fact of the error number appearing in the traceback.

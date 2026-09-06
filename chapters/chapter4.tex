@@ -1,0 +1,631 @@
+% !TeX root = ../main.tex
+\chapter{User side framework}
+\section{Introduction}
+We have learnt about the GUI, but what about the actual code? This is the exact thing we are learning here.
+
+\section{A brief note on syntax}
+\label{sec:syn}
+The syntax of HobbySpark code is intentionally very close to python. However, only the following features of python are included in HobbySpark v1.0.0:
+\begin{itemize}
+	\item Variables
+	\item \texttt{if}, \texttt{elif}, and \texttt{else} conditionals
+	\item \texttt{while} and \texttt{for} loops(for loops only applicable for range)
+	\item Functions
+	\item Classes with constructors and operator overloading(with explicit return types)
+	\item All python basic types (\texttt{bool}, \texttt{int}, \texttt{float} and \texttt{str})
+	\item \texttt{break} and \texttt{continue}
+\end{itemize}
+\begin{warningbox}
+	HobbySpark doesn't support all python features. So writing code with features HobbySpark does not support may end up giving you an error.
+\end{warningbox}
+
+\section{Classes and Hardware Objects}
+
+HobbySpark uses classes to represent hardware devices and other
+reusable objects. Each class provides methods for interacting with
+the corresponding device.
+
+\newpage
+
+\subsection{ActiveBuzzer}
+
+Standard class for programming active buzzers.\\
+It requires one argument:
+
+\begin{enumerate}
+	\item \texttt{pin} --- The pin connected to the active buzzer.
+\end{enumerate}
+
+Example usage:
+
+\begin{lstlisting}
+	buzzer = ActiveBuzzer(4)
+	
+	buzzer.on()
+	
+	wait(1)
+	
+	buzzer.off()
+\end{lstlisting}
+
+Methods:
+
+\begin{tabular}{ll}
+	\toprule
+	\textbf{Method} & \textbf{Purpose}\\
+	\midrule
+	\texttt{on()} & Turns the buzzer on.\\
+	\texttt{off()} & Turns the buzzer off.\\
+	\texttt{toggle()} & Toggles the buzzer state.\\
+	\texttt{return\_state()} & Returns the current buzzer state.\\
+	\bottomrule
+\end{tabular}
+
+
+
+
+
+\subsection{Button}
+
+Standard class for programming buttons.\\
+It requires one argument:
+
+\begin{enumerate}
+	\item \texttt{pin} --- The pin connected to the button.
+\end{enumerate}
+
+Example usage:
+
+\begin{lstlisting}
+	button = Button("D2")
+	
+	button.when_read(on_pressed)
+\end{lstlisting}
+
+Methods:
+
+\begin{tabular}{ll}
+	\toprule
+	\textbf{Method} & \textbf{Purpose}\\
+	\midrule
+	\texttt{read()} & Returns the current button state.\\
+	\texttt{when\_read(func)} & Runs the supplied function whenever the button reading is true.\\
+	\bottomrule
+\end{tabular}
+
+
+
+
+\newpage
+
+\subsection{I2C\_LCD\_Display}
+
+Class for controlling an I2C LCD display.\\
+It requires four arguments and accepts an optional address:
+
+\begin{enumerate}
+	\item \texttt{sda} --- The SDA pin.
+	\item \texttt{scl} --- The SCL pin.
+	\item \texttt{width} --- The display width.
+	\item \texttt{height} --- The display height.
+	\item \texttt{address} --- The I2C address of the display.
+\end{enumerate}
+
+Example usage:
+
+\begin{lstlisting}
+	display = I2C_LCD_Display(21, 22, 16, 2)
+	
+	display.set_cursor(0, 0)
+	
+	display.write("Hello")
+\end{lstlisting}
+
+
+Methods:
+
+\begin{tabular}{ll}
+	\toprule
+	\textbf{Method} & \textbf{Purpose}\\
+	\midrule
+	\texttt{write(string)} & Writes text to the display.\\
+	\texttt{add(string, importance)} & Adds text to the scrolling message system.\\
+	\texttt{set\_cursor(x, y)} & Sets the display cursor position.\\
+	\texttt{scroll\_text(string, delay, unit)} & Scrolls text across the display.\\
+	\texttt{scroll\_with\_millis(start\_string, delay, unit)} & Starts non-blocking scrolling using millisecond timing.\\
+	\bottomrule
+\end{tabular}
+
+
+\subsection{Led}
+
+Standard class for programming LEDs.\\
+It requires one argument:
+
+\begin{enumerate}
+	\item \texttt{pin} --- The pin connected to the LED.
+\end{enumerate}
+
+Example usage:
+
+\begin{lstlisting}
+	led = Led(4)
+	
+	led.on()
+	
+	wait(1)
+	
+	led.off()
+\end{lstlisting}
+
+Methods:
+
+\begin{tabular}{ll}
+	\toprule
+	\textbf{Method} & \textbf{Purpose}\\
+	\midrule
+	\texttt{on()} & Turns the LED on.\\
+	\texttt{off()} & Turns the LED off.\\
+	\texttt{toggle()} & Toggles the LED state.\\
+	\texttt{returnState()} & Returns the current LED state.\\
+	\texttt{blink(speed, unit, times)} & Blinks the LED.\\
+	\texttt{fade(time, unit)} & Fades the LED.\\
+	\bottomrule
+\end{tabular}
+
+
+\subsection{PassiveBuzzer}
+
+Standard class for programming passive buzzers.\\
+It requires one argument:
+
+\begin{enumerate}
+	\item \texttt{pin} --- The pin connected to the passive buzzer.
+\end{enumerate}
+
+Example usage:
+
+\begin{lstlisting}
+	buzzer = PassiveBuzzer(4)
+	
+	buzzer.write(440, 1, SEC)
+\end{lstlisting}
+
+Methods:
+
+\begin{tabular}{ll}
+	\toprule
+	\textbf{Method} & \textbf{Purpose}\\
+	\midrule
+	\texttt{write(frequency, time, unit)} & Plays the specified frequency for the specified duration.\\
+	\texttt{write\_note(frequency, time, unit)} & Plays the specified frequency for the specified duration.\\
+	\bottomrule
+\end{tabular}
+
+
+
+
+
+\subsection{RGB}
+
+The \texttt{RGB} class represents an RGB color value.\\
+It requires three arguments:
+
+\begin{enumerate}
+	\item \texttt{r} --- The red component.
+	\item \texttt{g} --- The green component.
+	\item \texttt{b} --- The blue component.
+\end{enumerate}
+
+Example usage:
+
+\begin{lstlisting}
+	color = RGB(255, 0, 0)
+	
+	hash = color.hash()
+\end{lstlisting}
+
+Methods:
+
+\begin{tabular}{ll}
+	\toprule
+	\textbf{Method} & \textbf{Purpose}\\
+	\midrule
+	\texttt{hash()} & Returns the RGB value as a hexadecimal color string.\\
+	\bottomrule
+\end{tabular}
+
+\newpage
+\subsection{RGBLed}
+
+Standard class for programming RGB LEDs.\\
+It requires three arguments:
+
+\begin{enumerate}
+	\item \texttt{r} --- The red channel pin.
+	\item \texttt{g} --- The green channel pin.
+	\item \texttt{b} --- The blue channel pin.
+\end{enumerate}
+
+Example usage:
+
+\begin{lstlisting}
+	led = RGBled(3, 5, 6)
+	
+	led.set(100, 0, 0)
+	
+	wait(1)
+	
+	led.off()
+\end{lstlisting}
+
+Methods:
+
+\begin{tabular}{ll}
+	\toprule
+	\textbf{Method} & \textbf{Purpose}\\
+	\midrule
+	\texttt{set(r,g,b)} & Sets the RGB channel values.\\
+	\texttt{off()} & Turns the RGB LED off.\\
+	\texttt{returnState()} & Returns the current RGB state.\\
+	\texttt{blink(r,g,b,speed,unit,times)} & Blinks the RGB LED using the specified color.\\
+	\texttt{fade(time,unit)} & Fades the RGB LED.\\
+	\bottomrule
+\end{tabular}
+
+
+\subsection{SerialMoniter}
+
+Standard class for communicating through the serial monitor.\\
+It accepts an optional baud rate.
+
+Example usage:
+
+\begin{lstlisting}
+	serial = SerialMoniter(9600)
+	
+	serial.print("Hello")
+	
+	reading = serial.input()
+\end{lstlisting}
+
+Methods:
+
+\begin{tabular}{ll}
+	\toprule
+	\textbf{Method} & \textbf{Purpose}\\
+	\midrule
+	\texttt{print(string)} & Prints data to the serial monitor.\\
+	\texttt{input()} & Reads serial input.\\
+	\texttt{available()} & Checks whether serial input is available.\\
+	\bottomrule
+\end{tabular}
+
+\newpage
+\subsection{ServoMotor}
+
+Standard class for programming servo motors.\\
+It requires one argument:
+
+\begin{enumerate}
+	\item \texttt{pin} --- The pin connected to the servo motor.
+\end{enumerate}
+
+Example usage:
+
+\begin{lstlisting}
+	servo = ServoMotor(9)
+	
+	servo.write(90)
+\end{lstlisting}
+
+Methods:
+
+\begin{tabular}{ll}
+	\toprule
+	\textbf{Method} & \textbf{Purpose}\\
+	\midrule
+	\texttt{write(degrees)} & Moves the servo to the specified angle.\\
+	\texttt{move\_smooth(degrees,speed,unit)} & Moves the servo smoothly toward the specified angle.\\
+	\texttt{return\_state()} & Returns the current servo state.\\
+	\bottomrule
+\end{tabular}
+
+
+
+
+
+\subsection{UltrasonicSensor}
+
+Class for measuring distance using an ultrasonic sensor.\\
+It requires two arguments:
+
+\begin{enumerate}
+	\item \texttt{trig} --- The trigger pin.
+	\item \texttt{echo} --- The echo pin.
+\end{enumerate}
+
+Example usage:
+
+\begin{lstlisting}
+	sensor = UltrasonicSensor("D6", "D7")
+	
+	distance = sensor.distance()
+	
+	sensor.when_distance(10, close_object)
+\end{lstlisting}
+
+Methods:
+
+\begin{tabular}{ll}
+	\toprule
+	\textbf{Method} & \textbf{Purpose}\\
+	\midrule
+	\texttt{distance()} & Returns the measured distance in centimeters.\\
+	\texttt{when\_distance(distance,function)} & Executes the supplied function when the measured distance matches the specified distance.\\
+	\bottomrule
+\end{tabular}
+\newpage
+\section{Functions}
+
+The HobbySpark framework provides functions for controlling the execution of a
+program. These functions can be used to introduce delays while either allowing
+or preventing the microcontroller from performing other operations.
+
+\subsection{\texttt{wait()}}
+
+The \texttt{wait()} function waits for a specified amount of time while allowing
+background operations such as button reads and potentiometer reads to continue.
+
+\begin{lstlisting}[language=Python]
+wait(time, unit=MS) -> None
+\end{lstlisting}
+
+\textbf{Parameters:}
+
+\begin{itemize}
+    \item \texttt{time} -- The amount of time to wait. It must be an
+    \texttt{int} or \texttt{float}.
+    
+    \item \texttt{unit} -- The unit in which \texttt{time} is specified.
+    It must be an \texttt{int}. The default value is \texttt{MS}.
+\end{itemize}
+
+\textbf{Behaviour:}
+
+Unlike a complete blocking delay, \texttt{wait()} allows operations such as
+button reads and potentiometer reads to run during the waiting period.
+
+\textbf{Errors:}
+
+\begin{itemize}
+    \item \texttt{InvalidArgumentError} is raised if \texttt{time} is not an
+    \texttt{int} or \texttt{float}.
+    
+    \item \texttt{InvalidArgumentError} is raised if \texttt{unit} is not an
+    \texttt{int}.
+\end{itemize}
+
+
+\subsection{\texttt{stop()}}
+
+The \texttt{stop()} function completely blocks the microcontroller for the
+specified amount of time. During this period, the microcontroller does not
+perform other operations.
+
+\begin{lstlisting}[language=Python]
+stop(time, unit=MS) -> None
+\end{lstlisting}
+
+\textbf{Parameters:}
+
+\begin{itemize}
+    \item \texttt{time} -- The amount of time for which the microcontroller
+    should be stopped. It must be an \texttt{int} or \texttt{float}.
+    
+    \item \texttt{unit} -- The unit in which \texttt{time} is specified.
+    It must be an \texttt{int}. The default value is \texttt{MS}.
+\end{itemize}
+
+\textbf{Behaviour:}
+
+The \texttt{stop()} function completely blocks the microcontroller for the
+specified duration. Unlike \texttt{wait()}, other operations do not run during
+this period.
+
+\textbf{Errors:}
+
+\begin{itemize}
+    \item \texttt{InvalidArgumentError} is raised if \texttt{time} is not an
+    \texttt{int} or \texttt{float}.
+    
+    \item \texttt{InvalidArgumentError} is raised if \texttt{unit} is not an
+    \texttt{int}.
+\end{itemize}
+
+\newpage
+\section{Constants}
+
+The HobbySpark framework defines several constants that can be used
+throughout a program for timing and musical-note frequencies.
+
+\subsection{\texttt{MS}}
+
+\begin{lstlisting}[language=C++]
+float MS = 1;
+\end{lstlisting}
+
+\texttt{MS} represents milliseconds. It has the value \texttt{1}, so a
+value multiplied by \texttt{MS} remains in milliseconds.
+
+For example:
+
+\begin{lstlisting}[language=C++]
+stop(500, MS);
+\end{lstlisting}
+
+pauses execution for 500 milliseconds.
+
+\subsection{\texttt{SEC}}
+
+\begin{lstlisting}[language=C++]
+float SEC = 1000;
+\end{lstlisting}
+
+\texttt{SEC} represents seconds in milliseconds. Its value is
+\texttt{1000}, because one second is equal to 1000 milliseconds.
+
+For example:
+
+\begin{lstlisting}[language=C++]
+stop(2, SEC);
+\end{lstlisting}
+
+pauses execution for 2000 milliseconds, or two seconds.
+
+\subsection{\texttt{US}}
+
+\begin{lstlisting}[language=C++]
+float US = 0.001;
+\end{lstlisting}
+
+\texttt{US} represents microseconds in the timing calculations used by
+the framework. Its value is \texttt{0.001}.
+
+\subsection{Musical Note Constants}
+
+The HobbySpark framework provides frequency constants for musical notes
+from octave 1 through octave 8. The values represent frequencies in
+hertz and can be supplied to functions that generate tones.
+
+The note constants are provided as follows:
+
+\begin{enumerate}
+    \item \texttt{NOTE\_C1} -- C in octave 1, 32.70 Hz.
+    \item \texttt{NOTE\_CS1} -- C-sharp in octave 1, 34.65 Hz.
+    \item \texttt{NOTE\_DF1} -- D-flat in octave 1; an alias of \texttt{NOTE\_CS1}.
+    \item \texttt{NOTE\_D1} -- D in octave 1, 36.71 Hz.
+    \item \texttt{NOTE\_DS1} -- D-sharp in octave 1, 38.89 Hz.
+    \item \texttt{NOTE\_EF1} -- E-flat in octave 1; an alias of \texttt{NOTE\_DS1}.
+    \item \texttt{NOTE\_E1} -- E in octave 1, 41.20 Hz.
+    \item \texttt{NOTE\_F1} -- F in octave 1, 43.65 Hz.
+    \item \texttt{NOTE\_FS1} -- F-sharp in octave 1, 46.25 Hz.
+    \item \texttt{NOTE\_GF1} -- G-flat in octave 1; an alias of \texttt{NOTE\_FS1}.
+    \item \texttt{NOTE\_G1} -- G in octave 1, 49.00 Hz.
+    \item \texttt{NOTE\_GS1} -- G-sharp in octave 1, 51.91 Hz.
+    \item \texttt{NOTE\_AF1} -- A-flat in octave 1; an alias of \texttt{NOTE\_GS1}.
+    \item \texttt{NOTE\_A1} -- A in octave 1, 55.00 Hz.
+    \item \texttt{NOTE\_AS1} -- A-sharp in octave 1, 58.27 Hz.
+    \item \texttt{NOTE\_BF1} -- B-flat in octave 1; an alias of \texttt{NOTE\_AS1}.
+    \item \texttt{NOTE\_B1} -- B in octave 1, 61.74 Hz.
+
+    \item \texttt{NOTE\_C2} -- C in octave 2, 65.41 Hz.
+    \item \texttt{NOTE\_CS2} -- C-sharp in octave 2, 69.30 Hz.
+    \item \texttt{NOTE\_DF2} -- D-flat in octave 2; an alias of \texttt{NOTE\_CS2}.
+    \item \texttt{NOTE\_D2} -- D in octave 2, 73.42 Hz.
+    \item \texttt{NOTE\_DS2} -- D-sharp in octave 2, 77.78 Hz.
+    \item \texttt{NOTE\_EF2} -- E-flat in octave 2; an alias of \texttt{NOTE\_DS2}.
+    \item \texttt{NOTE\_E2} -- E in octave 2, 82.41 Hz.
+    \item \texttt{NOTE\_F2} -- F in octave 2, 87.31 Hz.
+    \item \texttt{NOTE\_FS2} -- F-sharp in octave 2, 92.50 Hz.
+    \item \texttt{NOTE\_GF2} -- G-flat in octave 2; an alias of \texttt{NOTE\_FS2}.
+    \item \texttt{NOTE\_G2} -- G in octave 2, 98.00 Hz.
+    \item \texttt{NOTE\_GS2} -- G-sharp in octave 2, 103.83 Hz.
+    \item \texttt{NOTE\_AF2} -- A-flat in octave 2; an alias of \texttt{NOTE\_GS2}.
+    \item \texttt{NOTE\_A2} -- A in octave 2, 110.00 Hz.
+    \item \texttt{NOTE\_AS2} -- A-sharp in octave 2, 116.54 Hz.
+    \item \texttt{NOTE\_BF2} -- B-flat in octave 2; an alias of \texttt{NOTE\_AS2}.
+    \item \texttt{NOTE\_B2} -- B in octave 2, 123.47 Hz.
+
+    \item \texttt{NOTE\_C3} -- C in octave 3, 130.81 Hz.
+    \item \texttt{NOTE\_CS3} -- C-sharp in octave 3, 138.59 Hz.
+    \item \texttt{NOTE\_DF3} -- D-flat in octave 3; an alias of \texttt{NOTE\_CS3}.
+    \item \texttt{NOTE\_D3} -- D in octave 3, 146.83 Hz.
+    \item \texttt{NOTE\_DS3} -- D-sharp in octave 3, 155.56 Hz.
+    \item \texttt{NOTE\_EF3} -- E-flat in octave 3; an alias of \texttt{NOTE\_DS3}.
+    \item \texttt{NOTE\_E3} -- E in octave 3, 164.81 Hz.
+    \item \texttt{NOTE\_F3} -- F in octave 3, 174.61 Hz.
+    \item \texttt{NOTE\_FS3} -- F-sharp in octave 3, 185.00 Hz.
+    \item \texttt{NOTE\_GF3} -- G-flat in octave 3; an alias of \texttt{NOTE\_FS3}.
+    \item \texttt{NOTE\_G3} -- G in octave 3, 196.00 Hz.
+    \item \texttt{NOTE\_GS3} -- G-sharp in octave 3, 207.65 Hz.
+    \item \texttt{NOTE\_AF3} -- A-flat in octave 3; an alias of \texttt{NOTE\_GS3}.
+    \item \texttt{NOTE\_A3} -- A in octave 3, 220.00 Hz.
+    \item \texttt{NOTE\_AS3} -- A-sharp in octave 3, 233.08 Hz.
+    \item \texttt{NOTE\_BF3} -- B-flat in octave 3; an alias of \texttt{NOTE\_AS3}.
+    \item \texttt{NOTE\_B3} -- B in octave 3, 246.94 Hz.
+
+    \item \texttt{NOTE\_C4} -- C in octave 4, 261.63 Hz.
+    \item \texttt{NOTE\_CS4} -- C-sharp in octave 4, 277.18 Hz.
+    \item \texttt{NOTE\_DF4} -- D-flat in octave 4; an alias of \texttt{NOTE\_CS4}.
+    \item \texttt{NOTE\_D4} -- D in octave 4, 293.66 Hz.
+    \item \texttt{NOTE\_DS4} -- D-sharp in octave 4, 311.13 Hz.
+    \item \texttt{NOTE\_EF4} -- E-flat in octave 4; an alias of \texttt{NOTE\_DS4}.
+    \item \texttt{NOTE\_E4} -- E in octave 4, 329.63 Hz.
+    \item \texttt{NOTE\_F4} -- F in octave 4, 349.23 Hz.
+    \item \texttt{NOTE\_FS4} -- F-sharp in octave 4, 369.99 Hz.
+    \item \texttt{NOTE\_GF4} -- G-flat in octave 4; an alias of \texttt{NOTE\_FS4}.
+    \item \texttt{NOTE\_G4} -- G in octave 4, 392.00 Hz.
+    \item \texttt{NOTE\_GS4} -- G-sharp in octave 4, 415.30 Hz.
+    \item \texttt{NOTE\_AF4} -- A-flat in octave 4; an alias of \texttt{NOTE\_GS4}.
+    \item \texttt{NOTE\_A4} -- A in octave 4, 440.00 Hz.
+    \item \texttt{NOTE\_AS4} -- A-sharp in octave 4, 466.16 Hz.
+    \item \texttt{NOTE\_BF4} -- B-flat in octave 4; an alias of \texttt{NOTE\_AS4}.
+    \item \texttt{NOTE\_B4} -- B in octave 4, 493.88 Hz.
+
+    \item \texttt{NOTE\_C5} -- C in octave 5, 523.25 Hz.
+    \item \texttt{NOTE\_CS5} -- C-sharp in octave 5, 554.37 Hz.
+    \item \texttt{NOTE\_DF5} -- D-flat in octave 5; an alias of \texttt{NOTE\_CS5}.
+    \item \texttt{NOTE\_D5} -- D in octave 5, 587.33 Hz.
+    \item \texttt{NOTE\_DS5} -- D-sharp in octave 5, 622.25 Hz.
+    \item \texttt{NOTE\_EF5} -- E-flat in octave 5; an alias of \texttt{NOTE\_DS5}.
+    \item \texttt{NOTE\_E5} -- E in octave 5, 659.26 Hz.
+    \item \texttt{NOTE\_F5} -- F in octave 5, 698.46 Hz.
+    \item \texttt{NOTE\_FS5} -- F-sharp in octave 5, 739.99 Hz.
+    \item \texttt{NOTE\_GF5} -- G-flat in octave 5; an alias of \texttt{NOTE\_FS5}.
+    \item \texttt{NOTE\_G5} -- G in octave 5, 783.99 Hz.
+    \item \texttt{NOTE\_GS5} -- G-sharp in octave 5, 830.61 Hz.
+    \item \texttt{NOTE\_AF5} -- A-flat in octave 5; an alias of \texttt{NOTE\_GS5}.
+    \item \texttt{NOTE\_A5} -- A in octave 5, 880.00 Hz.
+    \item \texttt{NOTE\_AS5} -- A-sharp in octave 5, 932.33 Hz.
+    \item \texttt{NOTE\_BF5} -- B-flat in octave 5; an alias of \texttt{NOTE\_AS5}.
+    \item \texttt{NOTE\_B5} -- B in octave 5, 987.77 Hz.
+
+    \item \texttt{NOTE\_C6} -- C in octave 6, 1046.50 Hz.
+    \item \texttt{NOTE\_CS6} -- C-sharp in octave 6, 1108.73 Hz.
+    \item \texttt{NOTE\_DF6} -- D-flat in octave 6; an alias of \texttt{NOTE\_CS6}.
+    \item \texttt{NOTE\_D6} -- D in octave 6, 1174.66 Hz.
+    \item \texttt{NOTE\_DS6} -- D-sharp in octave 6, 1244.51 Hz.
+    \item \texttt{NOTE\_EF6} -- E-flat in octave 6; an alias of \texttt{NOTE\_DS6}.
+    \item \texttt{NOTE\_E6} -- E in octave 6, 1318.51 Hz.
+    \item \texttt{NOTE\_F6} -- F in octave 6, 1396.91 Hz.
+    \item \texttt{NOTE\_FS6} -- F-sharp in octave 6, 1479.98 Hz.
+    \item \texttt{NOTE\_GF6} -- G-flat in octave 6; an alias of \texttt{NOTE\_FS6}.
+    \item \texttt{NOTE\_G6} -- G in octave 6, 1567.98 Hz.
+    \item \texttt{NOTE\_GS6} -- G-sharp in octave 6, 1661.22 Hz.
+    \item \texttt{NOTE\_AF6} -- A-flat in octave 6; an alias of \texttt{NOTE\_GS6}.
+    \item \texttt{NOTE\_A6} -- A in octave 6, 1760.00 Hz.
+    \item \texttt{NOTE\_AS6} -- A-sharp in octave 6, 1864.66 Hz.
+    \item \texttt{NOTE\_BF6} -- B-flat in octave 6; an alias of \texttt{NOTE\_AS6}.
+    \item \texttt{NOTE\_B6} -- B in octave 6, 1975.53 Hz.
+
+    \item \texttt{NOTE\_C7} -- C in octave 7, 2093.00 Hz.
+    \item \texttt{NOTE\_CS7} -- C-sharp in octave 7, 2217.46 Hz.
+    \item \texttt{NOTE\_DF7} -- D-flat in octave 7; an alias of \texttt{NOTE\_CS7}.
+    \item \texttt{NOTE\_D7} -- D in octave 7, 2349.32 Hz.
+    \item \texttt{NOTE\_DS7} -- D-sharp in octave 7, 2489.02 Hz.
+    \item \texttt{NOTE\_EF7} -- E-flat in octave 7; an alias of \texttt{NOTE\_DS7}.
+    \item \texttt{NOTE\_E7} -- E in octave 7, 2637.02 Hz.
+    \item \texttt{NOTE\_F7} -- F in octave 7, 2793.83 Hz.
+    \item \texttt{NOTE\_FS7} -- F-sharp in octave 7, 2959.96 Hz.
+    \item \texttt{NOTE\_GF7} -- G-flat in octave 7; an alias of \texttt{NOTE\_FS7}.
+    \item \texttt{NOTE\_G7} -- G in octave 7, 3135.96 Hz.
+    \item \texttt{NOTE\_GS7} -- G-sharp in octave 7, 3322.44 Hz.
+    \item \texttt{NOTE\_AF7} -- A-flat in octave 7; an alias of \texttt{NOTE\_GS7}.
+    \item \texttt{NOTE\_A7} -- A in octave 7, 3520.00 Hz.
+    \item \texttt{NOTE\_AS7} -- A-sharp in octave 7, 3729.31 Hz.
+    \item \texttt{NOTE\_BF7} -- B-flat in octave 7; an alias of \texttt{NOTE\_AS7}.
+    \item \texttt{NOTE\_B7} -- B in octave 7, 3951.07 Hz.
+
+    \item \texttt{NOTE\_C8} -- C in octave 8, 4186.01 Hz.
+\end{enumerate}

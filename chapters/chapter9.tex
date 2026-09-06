@@ -1,0 +1,573 @@
+\chapter{Projects with HobbySpark}
+
+This chapter puts the classes and hardware objects introduced in the previous
+chapter to practical use. Each project combines one or more HobbySpark
+classes to create a useful hardware application.
+
+The projects are arranged so that the reader can gradually become comfortable
+with combining different hardware objects. Each project contains an
+introduction, the complete HobbySpark program, and a line-by-line explanation
+of the code.
+
+\section{Button-Controlled Buzzer}
+
+\subsection{Introduction}
+
+This project creates a simple button-controlled buzzer. When the button is
+pressed, the active buzzer is turned on. When the button is released, the
+buzzer is turned off.
+
+This is a useful example because it demonstrates how a \texttt{Button} can
+be combined with an \texttt{ActiveBuzzer}. It also introduces the use of
+\texttt{when\_read()} to make the program respond automatically to a change
+in the button's state.
+
+\subsection{Code}
+
+\begin{lstlisting}
+from stub import *
+
+set_board(ArduinoNano())
+
+buzzer = ActiveBuzzer(4)
+button = Button(2)
+
+def button_pressed():
+    buzzer.on()
+
+button.when_read(button_pressed)
+\end{lstlisting}
+
+\subsection{Explanation}
+
+\begin{enumerate}
+    \item \texttt{from stub import *} imports the HobbySpark classes and
+    functions required by the program.
+
+    \item \texttt{set\_board(ArduinoNano())} tells HobbySpark that the program
+    is intended to run on an Arduino Nano.
+
+    \item \texttt{buzzer = ActiveBuzzer(4)} creates an
+    \texttt{ActiveBuzzer} connected to pin 4.
+
+    \item \texttt{button = Button(2)} creates a \texttt{Button} connected to
+    pin 2.
+
+    \item \texttt{def button\_pressed():} defines a function that will be
+    executed when the button reading becomes true.
+
+    \item \texttt{buzzer.on()} turns the active buzzer on.
+
+    \item \texttt{button.when\_read(button\_pressed)} tells HobbySpark to run
+    \texttt{button\_pressed} whenever the button reading is true.
+\end{enumerate}
+
+
+\newpage
+
+\section{Electronic Doorbell}
+
+\subsection{Introduction}
+
+This project turns a button and an active buzzer into a simple electronic
+doorbell. Pressing the button causes the buzzer to sound for one second.
+
+Unlike the previous project, the buzzer is not left on indefinitely. The
+program performs an action, waits for a fixed amount of time, and then turns
+the buzzer off.
+
+\subsection{Code}
+
+\begin{lstlisting}
+from stub import *
+
+set_board(ArduinoNano())
+
+buzzer = ActiveBuzzer(4)
+button = Button(2)
+
+def ring_bell():
+    buzzer.on()
+    wait(1)
+    buzzer.off()
+
+button.when_read(ring_bell)
+\end{lstlisting}
+
+\subsection{Explanation}
+
+\begin{enumerate}
+    \item \texttt{from stub import *} imports the HobbySpark framework.
+
+    \item \texttt{set\_board(ArduinoNano())} selects the Arduino Nano as the
+    target board.
+
+    \item \texttt{buzzer = ActiveBuzzer(4)} creates an active buzzer connected
+    to pin 4.
+
+    \item \texttt{button = Button(2)} creates a button connected to pin 2.
+
+    \item \texttt{def ring\_bell():} defines the function that represents the
+    doorbell action.
+
+    \item \texttt{buzzer.on()} switches the buzzer on.
+
+    \item \texttt{wait(1)} waits for one second.
+
+    \item \texttt{buzzer.off()} switches the buzzer off after the one-second
+    delay.
+
+    \item \texttt{button.when\_read(ring\_bell)} connects the button reading
+    to the doorbell function. When the button reading is true,
+    \texttt{ring\_bell()} is executed.
+\end{enumerate}
+
+
+\newpage
+
+\section{Parking Distance Warning System}
+
+\subsection{Introduction}
+
+This project creates a simple parking-distance warning system using an
+ultrasonic sensor, an RGB LED, and a passive buzzer.
+
+The ultrasonic sensor measures the distance to an object. The RGB LED
+indicates the state of the system, while the passive buzzer produces an
+audible warning.
+
+This is a practical example of combining several different HobbySpark
+hardware objects into one application.
+
+\subsection{Code}
+
+\begin{lstlisting}
+from stub import *
+
+set_board(ArduinoNano())
+
+sensor = UltrasonicSensor(6, 7)
+led = RGBLed(3, 5, 9)
+buzzer = PassiveBuzzer(10)
+
+distance = sensor.distance()
+
+if distance < 10:
+    led.set(100, 0, 0)
+    buzzer.write(1000, 1, SEC)
+elif distance < 30:
+    led.set(100, 100, 0)
+    buzzer.write(600, 1, SEC)
+else:
+    led.set(0, 100, 0)
+\end{lstlisting}
+
+\subsection{Explanation}
+
+\begin{enumerate}
+    \item \texttt{from stub import *} imports the HobbySpark framework.
+
+    \item \texttt{set\_board(ArduinoNano())} selects the Arduino Nano.
+
+    \item \texttt{sensor = UltrasonicSensor(6, 7)} creates an ultrasonic
+    sensor. Pin 6 is used as the trigger pin and pin 7 as the echo pin.
+
+    \item \texttt{led = RGBLed(3, 5, 9)} creates an RGB LED using pins 3,
+    5, and 9 for its red, green, and blue channels.
+
+    \item \texttt{buzzer = PassiveBuzzer(10)} creates a passive buzzer on
+    pin 10.
+
+    \item \texttt{distance = sensor.distance()} obtains the measured distance
+    from the ultrasonic sensor.
+
+    \item \texttt{if distance < 10:} checks whether an object is less than
+    10 centimeters away.
+
+    \item \texttt{led.set(100, 0, 0)} sets the RGB LED to red when the object
+    is very close.
+
+    \item \texttt{buzzer.write(1000, 1, SEC)} plays a high-frequency warning
+    tone for one second.
+
+    \item \texttt{elif distance < 30:} checks whether the object is less than
+    30 centimeters away but was not already found to be less than
+    10 centimeters away.
+
+    \item \texttt{led.set(100, 100, 0)} sets the RGB LED to yellow.
+
+    \item \texttt{buzzer.write(600, 1, SEC)} produces a lower-frequency
+    warning tone.
+
+    \item \texttt{else:} handles objects that are at least 30 centimeters
+    away.
+
+    \item \texttt{led.set(0, 100, 0)} sets the RGB LED to green, indicating
+    that the object is at a safer distance.
+\end{enumerate}
+
+
+\newpage
+
+\section{Automatic Barrier Gate}
+
+\subsection{Introduction}
+
+This project creates a small automatic barrier gate. A button is used to
+request the gate to open, and a servo motor moves the barrier to an open
+position. After a short delay, the servo returns the barrier to its closed
+position.
+
+An RGB LED is also used to indicate the state of the gate.
+
+\subsection{Code}
+
+\begin{lstlisting}
+from stub import *
+
+set_board(ArduinoNano())
+
+button = Button(2)
+servo = ServoMotor(9)
+led = RGBLed(3, 5, 6)
+
+def open_gate():
+    led.set(0, 100, 0)
+    servo.write(90)
+    wait(3)
+    servo.write(0)
+    led.off()
+
+button.when_read(open_gate)
+\end{lstlisting}
+
+\subsection{Explanation}
+
+\begin{enumerate}
+    \item \texttt{from stub import *} imports the HobbySpark framework.
+
+    \item \texttt{set\_board(ArduinoNano())} selects the Arduino Nano.
+
+    \item \texttt{button = Button(2)} creates a button connected to pin 2.
+
+    \item \texttt{servo = ServoMotor(9)} creates a servo motor connected to
+    pin 9.
+
+    \item \texttt{led = RGBLed(3, 5, 6)} creates an RGB LED using pins 3,
+    5, and 6.
+
+    \item \texttt{def open\_gate():} defines the operation performed when the
+    button is pressed.
+
+    \item \texttt{led.set(0, 100, 0)} changes the RGB LED to green to indicate
+    that the gate is opening.
+
+    \item \texttt{servo.write(90)} moves the servo to 90 degrees.
+
+    \item \texttt{wait(3)} keeps the gate open for three seconds.
+
+    \item \texttt{servo.write(0)} returns the servo to zero degrees,
+    closing the gate.
+
+    \item \texttt{led.off()} switches the RGB LED off.
+
+    \item \texttt{button.when\_read(open\_gate)} causes the gate-opening
+    function to execute when the button reading is true.
+\end{enumerate}
+
+
+\newpage
+
+\section{Ultrasonic Security Alarm}
+
+\subsection{Introduction}
+
+This project demonstrates a simple security alarm. An ultrasonic sensor
+monitors the distance in front of the device. When an object reaches the
+specified distance, the program activates an active buzzer.
+
+This example uses the \texttt{when\_distance()} method, allowing the
+ultrasonic sensor to trigger a function when the specified distance
+condition is reached.
+
+\subsection{Code}
+
+\begin{lstlisting}
+from stub import *
+
+set_board(ArduinoNano())
+
+sensor = UltrasonicSensor(6, 7)
+buzzer = ActiveBuzzer(4)
+led = Led(8)
+
+def alarm():
+    buzzer.on()
+    led.on()
+
+sensor.when_distance(10, alarm)
+\end{lstlisting}
+
+\subsection{Explanation}
+
+\begin{enumerate}
+    \item \texttt{from stub import *} imports the HobbySpark framework.
+
+    \item \texttt{set\_board(ArduinoNano())} selects the Arduino Nano.
+
+    \item \texttt{sensor = UltrasonicSensor(6, 7)} creates an ultrasonic
+    sensor using pins 6 and 7.
+
+    \item \texttt{buzzer = ActiveBuzzer(4)} creates an active buzzer on
+    pin 4.
+
+    \item \texttt{led = Led(8)} creates an LED connected to pin 8.
+
+    \item \texttt{def alarm():} defines the function that will be executed
+    when the alarm condition occurs.
+
+    \item \texttt{buzzer.on()} activates the buzzer.
+
+    \item \texttt{led.on()} switches the warning LED on.
+
+    \item \texttt{sensor.when\_distance(10, alarm)} tells HobbySpark to
+    execute \texttt{alarm()} when the measured distance matches the
+    specified distance.
+\end{enumerate}
+
+
+\newpage
+
+\section{Serial-Controlled LCD Message System}
+
+\subsection{Introduction}
+
+This project combines the serial monitor with an LCD display. It demonstrates
+how information can be read from the serial monitor and displayed on an
+I2C LCD.
+
+It is useful when a program needs to communicate with a user through both
+the computer and a physical display.
+
+\subsection{Code}
+
+\begin{lstlisting}
+from stub import *
+
+set_board(ArduinoNano())
+
+serial = SerialMoniter(9600)
+display = I2C_LCD_Display(21, 22, 16, 2)
+
+serial.print("Enter a message:")
+message = serial.input()
+
+display.set_cursor(0, 0)
+display.write(message)
+\end{lstlisting}
+
+\subsection{Explanation}
+
+\begin{enumerate}
+    \item \texttt{from stub import *} imports the HobbySpark framework.
+
+    \item \texttt{set\_board(ArduinoNano())} selects the Arduino Nano.
+
+    \item \texttt{serial = SerialMoniter(9600)} creates a serial monitor
+    object using a baud rate of 9600.
+
+    \item \texttt{display = I2C\_LCD\_Display(21, 22, 16, 2)} creates a
+    16-column by 2-row I2C LCD display. The SDA and SCL pins are 21 and 22.
+
+    \item \texttt{serial.print("Enter a message:")} displays a prompt in
+    the serial monitor.
+
+    \item \texttt{message = serial.input()} reads the user's serial input
+    and stores it in \texttt{message}.
+
+    \item \texttt{display.set\_cursor(0, 0)} moves the LCD cursor to the
+    first column of the first row.
+
+    \item \texttt{display.write(message)} writes the received message to
+    the LCD.
+\end{enumerate}
+
+
+\newpage
+
+\section{RGB Status Indicator}
+
+\subsection{Introduction}
+
+This project demonstrates how an RGB LED can be used as a status indicator.
+The program represents three different states using three different colors.
+
+The project also demonstrates the \texttt{RGB} class. Instead of directly
+passing three color components to the RGB LED, an \texttt{RGB} object is
+used to represent a color.
+
+\subsection{Code}
+
+\begin{lstlisting}
+from stub import *
+
+set_board(ArduinoNano())
+
+led = RGBLed(3, 5, 6)
+
+ready = RGB(0, 100, 0)
+warning = RGB(100, 100, 0)
+error = RGB(100, 0, 0)
+
+led.set(ready.r, ready.g, ready.b)
+wait(1)
+
+led.set(warning.r, warning.g, warning.b)
+wait(1)
+
+led.set(error.r, error.g, error.b)
+\end{lstlisting}
+
+\subsection{Explanation}
+
+\begin{enumerate}
+    \item \texttt{from stub import *} imports the HobbySpark framework.
+
+    \item \texttt{set\_board(ArduinoNano())} selects the Arduino Nano.
+
+    \item \texttt{led = RGBLed(3, 5, 6)} creates an RGB LED using three
+    output pins.
+
+    \item \texttt{ready = RGB(0, 100, 0)} creates an RGB color representing
+    green.
+
+    \item \texttt{warning = RGB(100, 100, 0)} creates an RGB color
+    representing yellow.
+
+    \item \texttt{error = RGB(100, 0, 0)} creates an RGB color representing
+    red.
+
+    \item \texttt{led.set(ready.r, ready.g, ready.b)} sets the LED to the
+    ready color.
+
+    \item \texttt{wait(1)} waits for one second.
+
+    \item \texttt{led.set(warning.r, warning.g, warning.b)} changes the LED
+    to the warning color.
+
+    \item \texttt{wait(1)} waits for another second.
+
+    \item \texttt{led.set(error.r, error.g, error.b)} changes the LED to the
+    error color.
+\end{enumerate}
+
+
+\newpage
+
+\section{Ultrasonic Distance Display}
+
+\subsection{Introduction}
+
+This project combines an ultrasonic sensor and an I2C LCD display to create
+a simple distance display. The measured distance is written to the LCD.
+
+This is a useful example of combining a sensor with a display rather than
+simply printing sensor data to the terminal.
+
+\subsection{Code}
+
+\begin{lstlisting}
+from stub import *
+
+set_board(ArduinoNano())
+
+sensor = UltrasonicSensor(6, 7)
+display = I2C_LCD_Display(21, 22, 16, 2)
+
+distance = sensor.distance()
+
+display.set_cursor(0, 0)
+display.write("Distance:")
+
+display.set_cursor(0, 1)
+display.write(distance)
+\end{lstlisting}
+
+\subsection{Explanation}
+
+\begin{enumerate}
+    \item \texttt{from stub import *} imports the HobbySpark framework.
+
+    \item \texttt{set\_board(ArduinoNano())} selects the Arduino Nano.
+
+    \item \texttt{sensor = UltrasonicSensor(6, 7)} creates an ultrasonic
+    sensor using pins 6 and 7.
+
+    \item \texttt{display = I2C\_LCD\_Display(21, 22, 16, 2)} creates the
+    16 by 2 LCD display.
+
+    \item \texttt{distance = sensor.distance()} obtains the measured distance.
+
+    \item \texttt{display.set\_cursor(0, 0)} places the cursor at the
+    beginning of the first row.
+
+    \item \texttt{display.write("Distance:")} writes the label
+    \texttt{Distance:} to the display.
+
+    \item \texttt{display.set\_cursor(0, 1)} moves the cursor to the
+    beginning of the second row.
+
+    \item \texttt{display.write(distance)} writes the measured distance
+    to the LCD.
+\end{enumerate}
+
+
+\newpage
+
+\section{Servo Position Controller}
+
+\subsection{Introduction}
+
+This project uses a button to move a servo motor between two positions.
+Each time the button is read as true, the servo is moved to a predefined
+position.
+
+The project demonstrates how a physical input can control a mechanical
+output.
+
+\subsection{Code}
+
+\begin{lstlisting}
+from stub import *
+
+set_board(ArduinoNano())
+
+button = Button(2)
+servo = ServoMotor(9)
+
+def move_servo():
+    servo.write(90)
+
+button.when_read(move_servo)
+\end{lstlisting}
+
+\subsection{Explanation}
+
+\begin{enumerate}
+    \item \texttt{from stub import *} imports the HobbySpark framework.
+
+    \item \texttt{set\_board(ArduinoNano())} selects the Arduino Nano.
+
+    \item \texttt{button = Button(2)} creates a button connected to pin 2.
+
+    \item \texttt{servo = ServoMotor(9)} creates a servo motor connected to
+    pin 9.
+
+    \item \texttt{def move\_servo():} defines the function that moves the
+    servo.
+
+    \item \texttt{servo.write(90)} commands the servo to move to 90 degrees.
+
+    \item \texttt{button.when\_read(move\_servo)} connects the button to
+    the servo-control function.
+\end{enumerate}

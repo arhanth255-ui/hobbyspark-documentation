@@ -1,0 +1,884 @@
+\documentclass[11pt]{book}
+\usepackage[a4paper,margin=1in,headheight=16pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage{indentfirst}
+\usepackage{forest}
+\usepackage{seqsplit}
+\usepackage{adjustbox}
+
+\newcommand{\error}[1]{\texttt{\seqsplit{#1}}}
+\newcommand{\code}[1]{\texttt{#1}}
+\makeatletter
+
+\renewcommand{\chaptermark}[1]{%
+    \if@mainmatter
+        \markboth{\@chapapp\ \thechapter.\ #1}{}
+    \else
+        \markboth{#1}{}
+    \fi
+}
+
+\makeatother
+\definecolor{hobbyblue}{HTML}{145DA0}
+\definecolor{hobbydark}{HTML}{12344D}
+\definecolor{codebackground}{HTML}{F5F7F9}
+\definecolor{codeframe}{HTML}{D5DCE3}
+\definecolor{notebackground}{HTML}{F1F6FB}
+\definecolor{noteframe}{HTML}{4A90C2}
+\definecolor{warningbackground}{HTML}{FFF8E6}
+\definecolor{warningframe}{HTML}{C98A00}
+\definecolor{tipbackground}{HTML}{EEF8F1}
+\definecolor{tipframe}{HTML}{4B9560}
+
+\lstdefinelanguage{HobbySpark}{sensitive=true,morekeywords={if,elif,else,while,for,in,True,False,None,break,continue,return,class,def,and,or,not,print,range,ActiveBuzzer, Led, on, wait, off},morecomment=[l]\#,morestring=[b]",morestring=[b]'}
+
+\lstdefinestyle{tracebacks}{
+	basicstyle=\ttfamily\small,
+	literate={'}{{'}}1
+}
+
+\lstset{
+	language=HobbySpark,
+	backgroundcolor=\color{codebackground},
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{hobbyblue}\bfseries,
+	stringstyle=\color{purple},
+	commentstyle=\color{gray}\itshape,
+	frame=single,
+	rulecolor=\color{codeframe},
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	numbersep=8pt,
+	breaklines=true,
+	keepspaces=true,
+	showspaces=false,
+	showstringspaces=false,
+	columns=fullflexible,
+	tabsize=4
+}
+\newtcolorbox{notebox}{breakable,colback=notebackground,colframe=noteframe,title=Note,fonttitle=\bfseries}
+\newtcolorbox{tipbox}{breakable,colback=tipbackground,colframe=tipframe,title=Tip,fonttitle=\bfseries}
+\newtcolorbox{warningbox}{breakable,colback=warningbackground,colframe=warningframe,title=Warning,fonttitle=\bfseries}
+
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{HobbySpark User Guide}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\fancyhead[L]{\nouppercase{\leftmark}}
+	\fancyhead[R]{HobbySpark User Guide}
+	\fancyfoot[C]{\thepage}
+	\renewcommand{\headrulewidth}{0.4pt}
+}
+
+\makeatletter
+
+\titleformat{\chapter}[display]
+{\normalfont\bfseries\color{hobbydark}}
+{\filleft\Large\@chapapp\ \thechapter}
+{10pt}
+{\Huge}
+
+\makeatother
+\titleformat{\section}{\normalfont\Large\bfseries\color{hobbydark}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\color{hobbydark}}{\thesubsection}{0.8em}{}
+\setlist[itemize]{itemsep=2pt,topsep=4pt}
+\setlist[enumerate]{itemsep=3pt,topsep=4pt}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=hobbyblue,
+	urlcolor=hobbyblue,
+	citecolor=hobbyblue,
+	pdftitle={HobbySpark User Guide},
+	pdfauthor={Arhanth}
+}
+
+\title{\Huge\bfseries HobbySpark\\[0.3em]\Large User Guide}
+\author{Arhanth}
+\date{\today}
+
+\begin{document}
+\frontmatter
+	\begin{titlepage}
+
+\newgeometry{top=1in,bottom=1in,right=0.75in,left=0.75in}
+
+\begin{tikzpicture}[overlay,remember picture]
+    \draw[line width=1.5pt]
+        ($ (current page.north west) + (1.0cm,-1.0cm) $)
+        rectangle
+        ($ (current page.south east) + (-1.0cm,1.0cm) $);
+\end{tikzpicture}
+
+\begin{center}
+
+    \vspace*{1.0cm}
+
+    % HobbySpark logo
+    \includegraphics[width=0.5\textwidth]{images/icon.png}
+
+    \vspace{0.8cm}
+
+    % Main title
+    {\Huge\bfseries HobbySpark}
+
+    \vspace{0.3cm}
+
+    {\LARGE\bfseries User Guide and Developer Reference}
+
+    \vspace{0.7cm}
+
+    % Description
+    {\large
+    \textit{
+        A Comprehensive Guide to Programming, Configuring,\\
+        and Extending the HobbySpark Framework
+    }}
+
+    \vspace{1.2cm}
+
+    % Edition / version
+    {\large\textbf{Version 1.0.0}}
+
+    \vspace{0.25cm}
+
+    {\large\textit{\today}}
+
+	\vspace{0.25cm}
+
+	{\Large\textit{Compiled by \LaTeX}}
+    \vfill
+
+    % Author
+    {\large\textbf{Written by}}
+
+    \vspace{0.25cm}
+
+    {\Large\bfseries Arhanth}
+
+    \vspace{1.2cm}
+
+    % Closing statement
+    {\small
+    \textit{
+        Documentation for the HobbySpark framework
+    }}
+
+\end{center}
+
+\restoregeometry
+
+\end{titlepage}
+	\tableofcontents
+	\newpage
+	\listoffigures
+	\newpage
+	\listoftables
+	\newpage
+	\chapter*{Copyright and License}
+\addcontentsline{toc}{chapter}{Copyright and License}
+
+\vspace*{1cm}
+
+\begin{center}
+    {\Large\bfseries HobbySpark User Guide}
+
+    \vspace{0.4cm}
+
+    {\large Version 1.0.0}
+
+    \vspace{0.8cm}
+
+    {\large Copyright \textcopyright\ 2026 Arhanth}
+
+    \vspace{1cm}
+\end{center}
+
+\section*{Copyright}
+
+This documentation, including its text, examples, diagrams, tables, and
+other original content, is copyright \textcopyright\ 2026 Arhanth.
+
+HobbySpark and the accompanying documentation are provided as a project
+for learning, development, experimentation, and educational use.
+
+Except where otherwise stated, the contents of this documentation may not
+be reproduced, redistributed, or modified for commercial purposes without
+prior permission from the copyright holder.
+
+\vspace{0.5cm}
+
+\section*{License}
+
+This documentation is released under the
+\textbf{Creative Commons Attribution--NonCommercial 4.0 International
+License (CC BY-NC 4.0)}.
+
+Under this license, you are free to:
+
+\begin{itemize}
+    \item \textbf{Share} --- copy and redistribute the material in any
+    medium or format.
+    
+    \item \textbf{Adapt} --- remix, transform, and build upon the material.
+\end{itemize}
+
+The following conditions apply:
+
+\begin{itemize}
+    \item \textbf{Attribution} --- appropriate credit must be given to
+    Arhanth, a link to the license must be provided, and any changes made
+    must be indicated.
+    
+    \item \textbf{NonCommercial} --- the material may not be used for
+    commercial purposes.
+\end{itemize}
+
+The full terms of the license are available at:
+
+\begin{center}
+    \texttt{https://creativecommons.org/licenses/by-nc/4.0/}
+\end{center}
+
+\vspace{0.5cm}
+
+\section*{Software License}
+
+The license for the HobbySpark software itself may differ from the license
+of this documentation. The licensing terms of the HobbySpark source code
+take precedence over the terms stated here for the software.
+
+\vfill
+
+\begin{center}
+    \textit{HobbySpark User Guide}\\
+    \textit{Version 1.0.0}\\
+    \textit{Written by Arhanth}
+\end{center}
+\newpage
+	\mainmatter
+	\input{chapters/chapter1.tex}
+	\input{chapters/chapter2.tex}
+	\input{chapters/chapter3.tex}
+	\input{chapters/chapter4.tex}
+	\input{chapters/chapter5.tex}
+	\input{chapters/chapter6.tex}
+	\input{chapters/chapter7.tex}
+	\input{chapters/chapter8.tex}
+	\input{chapters/chapter9.tex}
+	% \part{Full internal documentation of HobbySpark for developers}
+	% \chapter{Starting off}
+	% \section{Introduction}
+	% Now breathe, you've finally finished around 60 pages of documentation. This is the part where things change, we are venturing into the deep ocean of the internal implementation of HobbySpark, which is already about 4900 lines long excluding the stub(refer \ref{chap:stub}).
+
+	% \begin{tipbox}
+	% 	I really recommend you to clone the repo first(if you're a git knower). The repo to clone from is--
+		
+	% 	https://github.com/arhanth255-ui/HobbySpark.git
+	% 	Clone it with the \code{git clone} command. After cloning, try running the various files(You'll need Python313 installed).
+	% \end{tipbox}
+
+	% \input{chapters/second_part/chapter1.tex}
+
+
+
+
+
+\appendix
+\fancyhead[L]{\nouppercase{\leftmark}}
+\chapter{Error Reference}
+
+\begin{longtable}{p{0.25\textwidth} p{0.68\textwidth}}
+
+    \caption{HobbySpark Error Reference}
+    \label{tab:error-reference} \\
+
+    \toprule
+    \textbf{Error} & \textbf{Description} \\
+    \midrule
+    \endfirsthead
+
+    \toprule
+    \textbf{Error} & \textbf{Description} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \texttt{SyntaxError} &
+    The Python code does not follow valid syntax. \\
+
+    \texttt{IndentationError} &
+    The indentation of the code is incorrect. \\
+
+    \texttt{TabError} &
+    Tabs and spaces are mixed inconsistently for indentation. \\
+
+    \texttt{NameError} &
+    A variable or name is used before it has been defined. \\
+
+    \texttt{TypeError} &
+    An operation or function is used with an inappropriate type. \\
+
+    \texttt{ValueError} &
+    A function receives the correct type but an invalid value. \\
+
+    \texttt{IndexError} &
+    A sequence is accessed using an index that does not exist. \\
+
+    \texttt{KeyError} &
+    A dictionary is accessed using a key that does not exist. \\
+
+    \texttt{AttributeError} &
+    An object does not have the requested attribute or method. \\
+
+    \texttt{ImportError} &
+    A requested module or name cannot be imported. \\
+
+    \texttt{ModuleNotFoundError} &
+    The requested module cannot be found. \\
+
+    \texttt{ZeroDivisionError} &
+    A number is divided by zero. \\
+
+    \texttt{FileNotFoundError} &
+    A requested file or directory cannot be found. \\
+
+    \texttt{PermissionError} &
+    The operation does not have sufficient permission. \\
+
+    \texttt{RecursionError} &
+    The maximum recursion depth is exceeded. \\
+
+    \texttt{MemoryError} &
+    The program cannot allocate enough memory. \\
+
+    \texttt{RuntimeError} &
+    An error occurs that does not fit another specific category. \\
+
+    \texttt{NotImplementedError} &
+    An operation or method has not been implemented. \\
+
+    \texttt{AssertionError} &
+    An \texttt{assert} statement evaluates to false. \\
+
+    \texttt{EOFError} &
+    Input is requested but the end of the input stream is reached. \\
+
+    \texttt{KeyboardInterrupt} &
+    The user interrupts the program, usually with \texttt{Ctrl+C}. \\
+
+    \texttt{SystemExit} &
+    The program requests that Python terminate execution. \\
+
+    \texttt{UnboundLocalError} &
+    A local variable is referenced before it has been assigned a value. \\
+
+    \texttt{StopIteration} &
+    An iterator has no more values to produce. \\
+
+    \texttt{UnicodeError} &
+    A Unicode-related encoding or decoding operation fails. \\
+
+    \texttt{PinNotApplicableError} &
+    The given pin does not have the required specifications for the requested use case. \\
+
+    \texttt{PinOutOfRangeError} &
+    The given pin is outside the valid pin range of the current board. \\
+
+    \texttt{InvalidPinTypeError} &
+    The given pin string contains an invalid or unrecognized pin name. \\
+
+    \texttt{PinAlreadyInUseError} &
+    The given pin is already being used by another device. \\
+
+    \texttt{InvalidArgumentError} &
+    An invalid argument was given to a function, method, or constructor. \\
+
+    \error{BoardNotInitializedFirstError} &
+    A device is used before a board has been initialized with \texttt{set\_board()}. \\
+
+    \error{DeviceNotCompatibleWithCurrentBoardError} &
+    A device is used with a board that does not support it or its required hardware features. \\
+
+    \texttt{MicroControllerError} &
+    The parent class of the HobbySpark-specific errors. \\
+
+\end{longtable}
+\chapter{Python Syntax Reference}
+
+\begin{longtable}{p{0.30\textwidth} p{0.65\textwidth}}
+    \caption{Python Syntax Reference}
+    \label{tab:python-syntax-reference} \\
+
+    \toprule
+    \textbf{Syntax} & \textbf{Description} \\
+    \midrule
+    \endfirsthead
+
+    \toprule
+    \textbf{Syntax} & \textbf{Description} \\
+    \midrule
+    \endhead
+
+    \midrule
+    \multicolumn{2}{r}{Continued on next page} \\
+    \endfoot
+
+    \bottomrule
+    \endlastfoot
+
+    \texttt{x = value} &
+    Assigns a value to a variable. \\
+
+    \texttt{x + y} &
+    Adds two values. \\
+
+    \texttt{x - y} &
+    Subtracts one value from another. \\
+
+    \texttt{x * y} &
+    Multiplies two values. \\
+
+    \texttt{x / y} &
+    Divides one value by another. \\
+
+    \texttt{x // y} &
+    Performs floor division. \\
+
+    \texttt{x \% y} &
+    Returns the remainder of a division. \\
+
+    \texttt{x ** y} &
+    Raises \texttt{x} to the power of \texttt{y}. \\
+
+    \texttt{x == y} &
+    Tests whether two values are equal. \\
+
+    \texttt{x != y} &
+    Tests whether two values are not equal. \\
+
+    \texttt{x < y} &
+    Tests whether \texttt{x} is less than \texttt{y}. \\
+
+    \texttt{x > y} &
+    Tests whether \texttt{x} is greater than \texttt{y}. \\
+
+    \texttt{x <= y} &
+    Tests whether \texttt{x} is less than or equal to \texttt{y}. \\
+
+    \texttt{x >= y} &
+    Tests whether \texttt{x} is greater than or equal to \texttt{y}. \\
+
+    \texttt{if condition:} &
+    Executes a block of code when a condition is true. \\
+
+    \texttt{elif condition:} &
+    Tests another condition when a preceding condition was false. \\
+
+    \texttt{else:} &
+    Executes a block of code when preceding conditions are false. \\
+
+    \texttt{while condition:} &
+    Repeatedly executes a block while a condition is true. \\
+
+    \texttt{for x in iterable:} &
+    Iterates over the values of an iterable. \\
+
+    \texttt{break} &
+    Terminates the innermost loop. \\
+
+    \texttt{continue} &
+    Skips to the next iteration of the innermost loop. \\
+
+    \texttt{pass} &
+    Performs no operation and acts as a placeholder. \\
+
+    \texttt{def function(...):} &
+    Defines a function. \\
+
+    \texttt{return value} &
+    Returns a value from a function. \\
+
+    \texttt{x in y} &
+    Tests whether a value is contained in another object. \\
+
+    \texttt{not x} &
+    Negates a Boolean expression. \\
+
+    \texttt{x and y} &
+    Performs a logical AND operation. \\
+
+    \texttt{x or y} &
+    Performs a logical OR operation. \\
+
+    \texttt{True} &
+    Represents the Boolean true value. \\
+
+    \texttt{False} &
+    Represents the Boolean false value. \\
+
+    \texttt{None} &
+    Represents the absence of a value. \\
+
+    \texttt{\# comment} &
+    Creates a comment that is ignored during execution. \\
+
+    \texttt{function(...)} &
+    Calls a function with the specified arguments. \\
+
+\end{longtable}
+
+\chapter{Glossary}
+
+\begin{longtable}{p{0.25\textwidth} p{0.68\textwidth}}
+
+    \caption{HobbySpark Glossary}
+    \label{tab:glossary} \\
+
+    \toprule
+    \textbf{Term} & \textbf{Definition} \\
+    \midrule
+    \endfirsthead
+
+    \toprule
+    \textbf{Term} & \textbf{Definition} \\
+    \midrule
+    \endhead
+
+    \midrule
+    \multicolumn{2}{r}{Continued on next page} \\
+    \endfoot
+
+    \bottomrule
+    \endlastfoot
+
+    \textbf{Analog Pin} &
+    A microcontroller pin capable of reading or, where supported, producing continuously varying electrical values rather than only digital HIGH and LOW states. \\
+
+    \textbf{Argument} &
+    A value supplied to a function, method, or constructor when it is called. \\
+
+    \textbf{Arduino} &
+    A family of development boards and microcontroller platforms commonly used for electronics and embedded programming. HobbySpark provides support for several Arduino boards. \\
+
+    \textbf{Board} &
+    A physical development board containing a microcontroller and its associated pins and hardware features. In HobbySpark, a board is selected using \texttt{set\_board()}. \\
+
+    \textbf{Board Class} &
+    The Python class representing a particular supported development board in HobbySpark. \\
+
+    \textbf{Board Definition} &
+    The information maintained by HobbySpark describing a board's pins and their available capabilities. \\
+
+    \textbf{Board Error} &
+    A category of HobbySpark-specific errors associated with board selection or initialization. \\
+
+    \textbf{Board Initialization} &
+    The process of selecting the board that HobbySpark will use before devices are created or accessed. \\
+
+    \textbf{Boolean} &
+    A data type with two logical values: \texttt{True} and \texttt{False}. \\
+
+    \textbf{Button} &
+    An input device that allows a program to detect whether a physical button is being pressed or released. \\
+
+    \textbf{Class} &
+    A Python construct used to define the structure and behaviour of objects. HobbySpark uses classes to represent boards and devices. \\
+
+    \textbf{Compiler} &
+    A program that translates source code into another form that can be executed or processed by a computer or another system. \\
+
+    \textbf{Constructor} &
+    A method used when creating an object. In Python, constructors are commonly implemented through \texttt{\_\_init\_\_()}. \\
+
+    \textbf{Control Flow} &
+    The order in which instructions in a program are executed. Conditional statements and loops are common mechanisms for controlling program flow. \\
+
+    \textbf{Digital Pin} &
+    A microcontroller pin that operates using discrete logical states, commonly represented as HIGH and LOW. \\
+
+    \textbf{Device} &
+    A hardware component that can be controlled or accessed through HobbySpark, such as an LED, button, buzzer, or other supported component. \\
+
+    \textbf{Device Class} &
+    A Python class used by HobbySpark to represent and control a particular type of hardware device. \\
+
+    \textbf{Device Compatibility} &
+    The ability of a device to operate correctly with the currently selected board and its available hardware features. \\
+
+    \textbf{Embedded System} &
+    A computing system designed to perform a specific function as part of a larger electronic or mechanical system. \\
+
+    \textbf{Error} &
+    A condition indicating that a program cannot proceed normally or that an operation was performed incorrectly. \\
+
+    \textbf{Error Hierarchy} &
+    The parent-child organization of error classes. HobbySpark-specific errors are arranged into a hierarchy beginning with \texttt{MicroControllerError}. \\
+
+    \textbf{Exception} &
+    A Python object representing an abnormal condition that occurs during program execution. Exceptions can be raised and handled by Python programs. \\
+
+    \textbf{Expression} &
+    A piece of Python code that produces or evaluates to a value. \\
+
+    \textbf{Function} &
+    A reusable block of code that performs an operation and may accept arguments and return a value. \\
+
+    \textbf{GPIO} &
+    General-Purpose Input/Output. GPIO pins allow a microcontroller to communicate with external hardware through digital or other supported electrical interfaces. \\
+
+    \textbf{HobbySpark} &
+    The framework documented by this book for programming and interacting with supported microcontroller boards and electronic devices using Python-based code. \\
+
+    \textbf{I2C} &
+    A serial communication protocol commonly used for communication between a microcontroller and peripheral devices. \\
+
+    \textbf{Instance} &
+    A specific object created from a class. For example, \texttt{ArduinoNano()} creates an instance of the \texttt{ArduinoNano} class. \\
+
+    \textbf{Keyword} &
+    A reserved word in Python with a predefined meaning, such as \texttt{if}, \texttt{else}, \texttt{while}, and \texttt{return}. \\
+
+    \textbf{Keyword Argument} &
+    An argument supplied to a function by explicitly specifying the parameter name. \\
+
+    \textbf{Lexer} &
+    A component that reads source code and breaks it into tokens that can be processed by a parser. \\
+
+    \textbf{Lexing} &
+    The process of converting source code into a sequence of tokens. \\
+
+    \textbf{Microcontroller} &
+    An integrated circuit containing a processor, memory, and input/output hardware designed for embedded applications. \\
+
+    \textbf{MicroControllerError} &
+    The highest-level parent error class in HobbySpark's error hierarchy. It serves as the parent of HobbySpark-specific error categories. \\
+
+    \textbf{Method} &
+    A function associated with a class or object. Methods are used to perform operations on or involving that object. \\
+
+    \textbf{Module} &
+    A Python file containing code such as functions, classes, and variables that can be used by another part of a program. \\
+
+    \textbf{Object} &
+    A Python value created from a class that contains data and behaviour. \\
+
+    \textbf{Parser} &
+    A component that analyzes tokens produced by the lexer and determines their syntactic structure. \\
+
+    \textbf{Parsing} &
+    The process of analyzing a sequence of tokens according to the rules of a programming language. \\
+
+    \textbf{Pin} &
+    An electrical connection on a development board through which a microcontroller can interact with external hardware. \\
+
+    \textbf{PinAlreadyInUseError} &
+    A HobbySpark-specific error raised when a pin that is already assigned to another device is used again. \\
+
+    \textbf{PinNotApplicableError} &
+    A HobbySpark-specific error raised when a pin does not have the required capability for the requested operation, such as using a non-PWM pin where PWM is required. \\
+
+    \textbf{PinOutOfRangeError} &
+    A HobbySpark-specific error raised when a pin outside the valid range of the selected board is specified. \\
+
+    \textbf{Pin Type} &
+    The classification or form of a pin identifier, such as a digital or analog pin designation. \\
+
+    \textbf{PWM} &
+    Pulse-Width Modulation. A technique that rapidly switches a digital signal to control the effective power delivered to a device, commonly used for controlling LED brightness or motor speed. \\
+
+    \textbf{Runtime} &
+    The period during which a program is being executed. \\
+
+    \textbf{Runtime Error} &
+    An error that occurs while a program is running rather than solely during source-code processing. \\
+
+    \textbf{SPI} &
+    Serial Peripheral Interface. A synchronous serial communication protocol commonly used by microcontrollers to communicate with peripheral devices. \\
+
+    \textbf{Stub} &
+    The Python-facing component of HobbySpark that makes the framework's functionality available to Python code before the code is processed for the target platform. \\
+
+    \textbf{Syntax} &
+    The set of rules defining how valid source code must be structured. \\
+
+    \textbf{Syntax Error} &
+    An error caused by source code that does not follow the syntax rules of Python. \\
+
+    \textbf{Token} &
+    A meaningful unit produced during lexical analysis, such as a keyword, identifier, operator, or literal. \\
+
+    \textbf{Transpiler} &
+    A program or component that translates source code from one programming representation into another representation. HobbySpark uses a transpilation stage as part of its processing system. \\
+
+    \textbf{Transpilation} &
+    The process of converting source code into another form of source code or an intermediate representation suitable for a different target. \\
+
+    \textbf{UART} &
+    Universal Asynchronous Receiver/Transmitter. A serial communication mechanism used for transmitting and receiving data between devices. \\
+
+    \textbf{Variable} &
+    A name that refers to a value stored or maintained by a program. \\
+
+    \textbf{Traceback} &
+    A report produced by Python when an exception occurs, showing the sequence of calls that led to the error. \\
+
+    \textbf{Value} &
+    A piece of data used or produced by a program, such as a number, string, Boolean, or object. \\
+
+    \textbf{Wait} &
+    An operation that pauses program execution for a specified amount of time before continuing. \\
+
+    \textbf{SEC} &
+    A HobbySpark time unit representing seconds, used when specifying time intervals for supported operations. \\
+
+    \textbf{Arduino Nano} &
+    A compact Arduino development board supported by HobbySpark. It provides digital and analog pins that can be used by supported devices. \\
+
+    \textbf{ESP32} &
+    A family of microcontrollers and development boards providing processing, GPIO, and connectivity features. HobbySpark supports several ESP32-based boards. \\
+
+    \textbf{ESP8266} &
+    A family of Wi-Fi-enabled microcontrollers commonly used in embedded and Internet-connected projects. HobbySpark supports selected ESP8266 development boards. \\
+
+    \textbf{Raspberry Pi Pico} &
+    A microcontroller development board based on the Raspberry Pi RP2040 microcontroller and supported by HobbySpark. \\
+
+    \textbf{STM32} &
+    A family of microcontrollers produced by STMicroelectronics and used in many embedded systems and development boards. \\
+
+    \textbf{Teensy} &
+    A family of compact microcontroller development boards designed for embedded and electronic projects. HobbySpark supports several Teensy boards. \\
+
+    \textbf{InvalidArgumentError} &
+    A HobbySpark-specific error raised when an argument supplied to a function, method, or constructor does not satisfy the required specification. \\
+
+    \textbf{InvalidPinTypeError} &
+    A HobbySpark-specific error raised when an invalid or unrecognized pin name is supplied. \\
+
+    \textbf{\error{BoardNotInitializedFirstError}} &
+    A HobbySpark-specific error raised when a device is used before a board has been selected using \texttt{set\_board()}. \\
+
+    \textbf{\error{DeviceNotCompatibleWithCurrentBoardError}} &
+    A HobbySpark-specific error reserved for situations in which a device cannot be used with the currently selected board. \\
+
+    \textbf{Error Message} &
+    Text presented to the programmer describing what went wrong during program execution or processing. \\
+
+    \textbf{Error Number} &
+    A numerical identifier associated with a HobbySpark-specific error to help distinguish different error conditions. \\
+
+    \textbf{Exception Handling} &
+    The process of responding to exceptions raised during program execution. \\
+
+    \textbf{Indentation} &
+    The whitespace at the beginning of a Python line that determines its position within a block of code. \\
+
+    \textbf{Loop} &
+    A programming structure that repeatedly executes a block of code while or for a specified condition or sequence. \\
+
+    \textbf{Conditional Statement} &
+    A statement that selects which block of code should execute based on a condition, commonly using \texttt{if}, \texttt{elif}, and \texttt{else}. \\
+
+    \textbf{Operator} &
+    A symbol or keyword that performs an operation on one or more values, such as addition, comparison, or logical evaluation. \\
+
+    \textbf{Assignment} &
+    The process of associating a value with a variable using the assignment operator, commonly \texttt{=}. \\
+
+    \textbf{Boolean Operator} &
+    An operator used to perform logical operations, such as \texttt{and}, \texttt{or}, and \texttt{not}. \\
+
+    \textbf{Comparison Operator} &
+    An operator used to compare values, such as \texttt{==}, \texttt{!=}, \texttt{<}, \texttt{>}, \texttt{<=}, and \texttt{>=}. \\
+
+    \textbf{Comment} &
+    Text written in source code for explanation or documentation that is ignored during normal program execution. In Python, comments begin with \texttt{\#}. \\
+
+    \textbf{Source Code} &
+    Human-readable program code written using a programming language. \\
+
+    \textbf{Target Platform} &
+    The hardware or software environment for which processed or translated code is intended. \\
+
+    \textbf{Hardware Abstraction} &
+    A layer that allows software to interact with hardware through a simpler programming interface without requiring every hardware detail to be handled directly by the programmer. \\
+
+    \textbf{Framework} &
+    A collection of software components and conventions designed to provide a structured foundation for developing applications or programs. \\
+
+    \textbf{API} &
+    Application Programming Interface. A collection of functions, classes, methods, and conventions through which software components can be used by other programs. \\
+
+    \textbf{PWM Pin} &
+    A pin capable of supporting pulse-width modulation for operations that require PWM output. \\
+
+    \textbf{Analog Input} &
+    An input operation that reads a varying electrical signal from an analog-capable pin. \\
+
+    \textbf{Digital Input} &
+    An input operation that reads a discrete logical state from a digital-capable pin. \\
+
+    \textbf{Digital Output} &
+    An output operation that sets a digital-capable pin to a logical state such as HIGH or LOW. \\
+
+    \textbf{Peripheral} &
+    A hardware component that communicates with or is controlled by a microcontroller. \\
+
+    \textbf{Development Board} &
+    A circuit board designed to make a microcontroller and its interfaces easier to program and connect to external hardware. \\
+
+\end{longtable}
+	\backmatter
+	\chapter{The End, for now}
+
+You've finally finished a ~60-page book. You should be proud of yourself for
+working your way through pages and pages of documentation. But now, it is the
+end of this book---at least for now.
+
+Why ``for now''? Because I am already planning Part II of this book, and I
+have already written 10 pages of it. Part II is going to explain the
+\emph{internal} mechanics and workings of HobbySpark.
+
+It will explain the stub, parser, lexer, GUI, and transpiler in detail,
+making sure to explain each and every function properly. While Part I was
+focused on using HobbySpark, Part II will go behind the scenes and explain
+how HobbySpark actually works.
+
+By the end of Part II, you should have a complete understanding of the
+internal structure of HobbySpark, giving you everything you need to edit,
+extend, debug, or improve virtually any part of the framework.
+
+So, for now, this is where we stop.
+
+\bigskip
+
+\begin{center}
+    \emph{But the journey isn't over yet.}
+\end{center}.
+\end{document}

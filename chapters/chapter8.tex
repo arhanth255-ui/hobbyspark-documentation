@@ -1,0 +1,893 @@
+
+
+\chapter{Supported boards}
+
+\section{Introduction}
+
+HobbySpark currently supports 30 different boards. Each board is identified
+within HobbySpark by its corresponding class name. These class names are used
+with the \code{set\_board} function when selecting the target board.
+
+This chapter provides a quick hardware reference for every supported board.
+The information includes the microcontroller, digital and analog I/O,
+PWM capability, and commonly available communication interfaces.
+
+The capabilities listed here describe the underlying hardware of the boards.
+They should not be interpreted as a guarantee that every listed feature is
+currently exposed through HobbySpark.
+
+\section{AdafruitFeatherESP32S2}
+
+\textbf{Description:} An Adafruit Feather board based on the ESP32-S2
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Adafruit Feather ESP32-S2 hardware reference}
+\label{tab:board-feather-esp32s2}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ESP32-S2 \\
+Digital I/O & 10 exposed logic pins \\
+Analog input & 6 pins \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+DAC & 2 pins \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The ESP32-S2 provides flexible peripheral multiplexing, allowing interfaces
+such as PWM, UART, I\textsuperscript{2}C, and SPI to be assigned to suitable
+GPIO pins. The board provides six analog-capable pins, with two also capable
+of DAC output.
+
+\newpage
+\section{AdafruitFeatherM0}
+
+\textbf{Description:} An Adafruit Feather board based on the SAMD21
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Adafruit Feather M0 hardware reference}
+\label{tab:board-feather-m0}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATSAMD21G18 \\
+Digital I/O & 20+ exposed I/O pins \\
+Analog input & Up to 8 analog inputs \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+DAC & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Feather M0 operates using 3.3 V logic. Its SAMD21 microcontroller
+provides flexible timer and peripheral multiplexing. Nearly all of the
+exposed logic pins can be used for PWM, although particular peripheral
+assignments can impose pin-specific restrictions.
+
+\section{ArduinoDue}
+
+\textbf{Description:} An Arduino board based on the 32-bit SAM3X8E
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Arduino Due hardware reference}
+\label{tab:board-arduino-due}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & SAM3X8E \\
+Digital I/O & 54 \\
+Analog input & 12 \\
+PWM & 12 pins \\
+I\textsuperscript{2}C & 2 interfaces \\
+SPI & Yes \\
+UART & 4 hardware UARTs \\
+DAC & 2 \\
+CAN & 2 interfaces \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Arduino Due is based on a 32-bit ARM Cortex-M3 processor operating at
+84 MHz. It provides substantially more I/O and communication capability
+than many of the smaller AVR-based Arduino boards.
+
+\newpage
+\section{ArduinoGigaR1}
+
+\textbf{Description:} An Arduino board designed for more advanced projects
+and based on the STM32H747XI microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Arduino GIGA R1 hardware reference}
+\label{tab:board-giga-r1}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & STM32H747XI \\
+Digital I/O & 76 \\
+Analog input & 12 \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Multiple hardware UARTs \\
+DAC & Yes \\
+CAN & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The GIGA R1 uses a high-performance STM32H747XI microcontroller and provides
+a large number of general-purpose I/O pins together with multiple hardware
+communication peripherals.
+
+\section{ArduinoLeonardo}
+
+\textbf{Description:} An Arduino board based on the ATmega32U4
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Arduino Leonardo hardware reference}
+\label{tab:board-leonardo}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATmega32U4 \\
+Digital I/O & 20 \\
+Analog input & 12 \\
+PWM & 7 pins \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & 1 hardware UART \\
+USB & Native USB \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The ATmega32U4 provides native USB functionality, allowing the Leonardo to
+appear as a USB device without requiring a separate USB-to-serial
+microcontroller.
+
+\newpage
+\section{ArduinoLilyPad}
+
+\textbf{Description:} A compact Arduino board designed for wearable and
+e-textile projects.
+
+\begin{table}[H]
+\centering
+\caption{Arduino LilyPad hardware reference}
+\label{tab:board-lilypad}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATmega328P \\
+Digital I/O & 14 \\
+Analog input & 6 \\
+PWM & 6 pins \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The LilyPad is designed for integration into wearable and textile-based
+projects. Its electrical capabilities are broadly comparable to those of
+ATmega328P-based Arduino boards.
+
+\section{ArduinoMega2560}
+
+\textbf{Description:} An Arduino board with a large number of digital and
+analog pins, based on the ATmega2560 microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Arduino Mega 2560 hardware reference}
+\label{tab:board-mega2560}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATmega2560 \\
+Digital I/O & 54 \\
+Analog input & 16 \\
+PWM & 15 pins \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & 4 hardware UARTs \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Mega 2560 is particularly useful when a project requires a large number
+of simultaneously connected digital devices.
+
+\newpage
+\section{ArduinoMicro}
+
+\textbf{Description:} A compact Arduino board based on the ATmega32U4
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Arduino Micro hardware reference}
+\label{tab:board-micro}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATmega32U4 \\
+Digital I/O & 20 \\
+Analog input & 12 \\
+PWM & 7 pins \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+USB & Native USB \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{ArduinoMini}
+
+\textbf{Description:} A small Arduino board designed for projects where a
+compact form factor is useful.
+
+\begin{table}[H]
+\centering
+\caption{Arduino Mini hardware reference}
+\label{tab:board-mini}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATmega328P \\
+Digital I/O & 14 \\
+Analog input & 8 \\
+PWM & 6 pins \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{ArduinoNano}
+
+\textbf{Description:} A compact Arduino board based on the ATmega328P
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Arduino Nano hardware reference}
+\label{tab:board-nano}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATmega328P \\
+Digital I/O & 22 \\
+Analog input & 8 \\
+PWM & 6 pins \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+\section{ArduinoNanoESP32}
+
+\textbf{Description:} An Arduino Nano board based on the ESP32-S3
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Arduino Nano ESP32 hardware reference}
+\label{tab:board-nano-esp32}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ESP32-S3 \\
+Digital I/O & 30 GPIOs on the module \\
+Analog input & Multiple ADC-capable GPIOs \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Multiple UART interfaces \\
+Wi-Fi & Yes \\
+Bluetooth & Bluetooth LE \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Nano ESP32 combines the compact Nano form factor with the wireless and
+peripheral capabilities of the ESP32-S3.
+
+\section{ArduinoNanoEvery}
+
+\textbf{Description:} A compact Arduino Nano board based on the ATmega4809
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Arduino Nano Every hardware reference}
+\label{tab:board-nano-every}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATmega4809 \\
+Digital I/O & 20 \\
+Analog input & 8 \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{ArduinoProMini}
+
+\textbf{Description:} A small Arduino board designed for embedded projects
+and based on the ATmega328P microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Arduino Pro Mini hardware reference}
+\label{tab:board-pro-mini}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATmega328P \\
+Digital I/O & 14 \\
+Analog input & 8 \\
+PWM & 6 pins \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{ArduinoUnoR3}
+
+\textbf{Description:} The third revision of the Arduino Uno, based on the
+ATmega328P microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Arduino Uno R3 hardware reference}
+\label{tab:board-uno-r3}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATmega328P \\
+Digital I/O & 14 \\
+Analog input & 6 \\
+PWM & 6 pins \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & 1 hardware UART \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Uno R3 is one of the most widely used Arduino boards and is based on
+the 8-bit ATmega328P microcontroller.
+
+\section{ArduinoUnoWiFiRev2}
+
+\textbf{Description:} An Arduino Uno board with Wi-Fi connectivity, based
+on the ATmega4809 microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Arduino Uno WiFi Rev2 hardware reference}
+\label{tab:board-uno-wifi}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATmega4809 \\
+Digital I/O & 20 \\
+Analog input & 6 \\
+PWM & 5 pins \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+Wi-Fi & Yes \\
+Bluetooth LE & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+\section{ArduinoZero}
+
+\textbf{Description:} An Arduino board based on the SAMD21 microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Arduino Zero hardware reference}
+\label{tab:board-zero}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATSAMD21G18 \\
+Digital I/O & 20 \\
+Analog input & 6 \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+DAC & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{ESP32C3}
+
+\textbf{Description:} An ESP32 development board based on the ESP32-C3
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{ESP32-C3 hardware reference}
+\label{tab:board-esp32-c3}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ESP32-C3 \\
+Digital I/O & Depends on board variant \\
+Analog input & ADC-capable GPIOs \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Multiple UART capability \\
+Wi-Fi & Yes \\
+Bluetooth & Bluetooth LE \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{ESP32DevKit}
+
+\textbf{Description:} An ESP32 development board intended for
+general-purpose ESP32 projects.
+
+\begin{table}[H]
+\centering
+\caption{ESP32 DevKit hardware reference}
+\label{tab:board-esp32-devkit}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ESP32 \\
+Digital I/O & Up to 34 GPIOs on the ESP32 \\
+Analog input & ADC-capable GPIOs \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & 3 UART interfaces \\
+DAC & 2 channels \\
+Wi-Fi & Yes \\
+Bluetooth & Bluetooth Classic + BLE \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The exact number of exposed pins depends on the particular ESP32 DevKit
+variant. The ESP32 supports peripheral multiplexing, allowing many
+interfaces to be assigned to different GPIOs.
+
+\section{ESP32S2}
+
+\textbf{Description:} An ESP32 development board based on the ESP32-S2
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{ESP32-S2 hardware reference}
+\label{tab:board-esp32-s2}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ESP32-S2 \\
+Digital I/O & Depends on board variant \\
+Analog input & ADC-capable GPIOs \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+DAC & 2 channels \\
+Wi-Fi & Yes \\
+Bluetooth & No Bluetooth radio \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{ESP32S3}
+
+\textbf{Description:} An ESP32 development board based on the ESP32-S3
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{ESP32-S3 hardware reference}
+\label{tab:board-esp32-s3}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ESP32-S3 \\
+Digital I/O & Depends on board variant \\
+Analog input & ADC-capable GPIOs \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & 3 UART interfaces \\
+Wi-Fi & Yes \\
+Bluetooth & Bluetooth LE \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+\section{ESP8266D1Mini}
+
+\textbf{Description:} A compact development board based on the ESP8266
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{ESP8266 D1 Mini hardware reference}
+\label{tab:board-esp8266-d1-mini}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ESP8266EX \\
+Digital I/O & 11 GPIOs on the ESP8266 \\
+Analog input & 1 ADC input \\
+PWM & Yes \\
+I\textsuperscript{2}C & Software/peripheral support \\
+SPI & Yes \\
+UART & Yes \\
+Wi-Fi & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{ESP8266NodeMCU}
+
+\textbf{Description:} A NodeMCU development board based on the ESP8266
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{ESP8266 NodeMCU hardware reference}
+\label{tab:board-esp8266-nodemcu}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ESP8266EX \\
+Digital I/O & Up to 17 GPIOs on the MCU \\
+Analog input & 1 ADC input \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+Wi-Fi & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{RaspberryPiPico}
+
+\textbf{Description:} A compact Raspberry Pi microcontroller board based
+on the RP2040 microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Raspberry Pi Pico hardware reference}
+\label{tab:board-pico}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & RP2040 \\
+Digital I/O & 26 exposed GPIOs \\
+Analog input & 3 \\
+PWM & 16 channels \\
+I\textsuperscript{2}C & 2 controllers \\
+SPI & 2 controllers \\
+UART & 2 controllers \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The RP2040 provides flexible programmable I/O and multiple hardware
+communication interfaces.
+
+\newpage
+\section{RaspberryPiPicoW}
+
+\textbf{Description:} A Raspberry Pi Pico board with wireless connectivity
+based on the RP2040 microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Raspberry Pi Pico W hardware reference}
+\label{tab:board-pico-w}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & RP2040 \\
+Digital I/O & 26 exposed GPIOs \\
+Analog input & 3 \\
+PWM & 16 channels \\
+I\textsuperscript{2}C & 2 controllers \\
+SPI & 2 controllers \\
+UART & 2 controllers \\
+Wi-Fi & Yes \\
+Bluetooth & Bluetooth LE \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Pico W provides essentially the same RP2040-based I/O architecture as
+the Pico while adding wireless connectivity.
+
+\section{STM32BlackPill}
+
+\textbf{Description:} A compact development board based on an STM32
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{STM32 Black Pill hardware reference}
+\label{tab:board-black-pill}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & STM32 family; varies by Black Pill variant \\
+Digital I/O & Depends on variant \\
+Analog input & Depends on variant \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Multiple hardware UARTs \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The name ``Black Pill'' is used for several STM32 development boards.
+Consequently, the exact processor and number of exposed pins depend on the
+specific hardware variant.
+
+\newpage
+\section{STM32BluePill}
+
+\textbf{Description:} A compact development board based on an STM32
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{STM32 Blue Pill hardware reference}
+\label{tab:board-blue-pill}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & STM32F103C8T6 (common variant) \\
+Digital I/O & Up to 37 GPIOs \\
+Analog input & Up to 10 ADC channels \\
+PWM & Yes \\
+I\textsuperscript{2}C & 2 interfaces \\
+SPI & 2 interfaces \\
+UART & 3 USART interfaces \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Blue Pill is commonly based on the STM32F103C8T6 microcontroller and
+provides a relatively large number of GPIO pins in a compact form factor.
+
+\section{SeeeduinoXIAO}
+
+\textbf{Description:} A compact Seeeduino board designed for small
+embedded projects.
+
+\begin{table}[H]
+\centering
+\caption{Seeeduino XIAO hardware reference}
+\label{tab:board-xiao}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ATSAMD21G18 \\
+Digital I/O & 11 \\
+Analog input & 11-capable GPIOs \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+DAC & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The XIAO provides a very small form factor while retaining the peripheral
+capabilities of the SAMD21 microcontroller.
+
+\newpage
+\section{SeeeduinoXIAOESP32C3}
+
+\textbf{Description:} A Seeeduino XIAO board based on the ESP32-C3
+microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Seeed XIAO ESP32-C3 hardware reference}
+\label{tab:board-xiao-esp32-c3}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & ESP32-C3 \\
+Digital I/O & 11 \\
+Analog input & 4 \\
+PWM & Yes \\
+I\textsuperscript{2}C & Yes \\
+SPI & Yes \\
+UART & Yes \\
+Wi-Fi & Yes \\
+Bluetooth & Bluetooth LE \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The XIAO ESP32-C3 combines the small XIAO form factor with the wireless
+capabilities of the ESP32-C3.
+\section{Teensy40}
+
+\textbf{Description:} A compact Teensy development board based on the
+NXP i.MX RT1062 microcontroller.
+
+\begin{table}[H]
+\centering
+\caption{Teensy 4.0 hardware reference}
+\label{tab:board-teensy40}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & NXP i.MX RT1062 \\
+Digital I/O & 40 \\
+Analog input & 14 \\
+PWM & Yes \\
+I\textsuperscript{2}C & Multiple interfaces \\
+SPI & Multiple interfaces \\
+UART & Multiple hardware serial ports \\
+CAN & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Teensy 4.0 uses a high-performance ARM Cortex-M7 processor and is
+designed for applications requiring substantially greater processing
+performance than typical 8-bit Arduino boards.
+
+\newpage
+\section{Teensy41}
+
+\textbf{Description:} A Teensy development board based on the NXP i.MX RT1062
+microcontroller with additional memory and connectivity compared with the
+Teensy 4.0.
+
+\begin{table}[H]
+\centering
+\caption{Teensy 4.1 hardware reference}
+\label{tab:board-teensy41}
+\begin{tabular}{ll}
+\toprule
+\textbf{Property} & \textbf{Specification} \\
+\midrule
+Microcontroller & NXP i.MX RT1062 \\
+Digital I/O & 55 \\
+Analog input & 18 \\
+PWM & Yes \\
+I\textsuperscript{2}C & Multiple interfaces \\
+SPI & Multiple interfaces \\
+UART & Multiple hardware serial ports \\
+CAN & Yes \\
+Ethernet & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Teensy 4.1 provides the same high-performance processor as the Teensy
+4.0 while offering substantially more memory, I/O, and expansion capability.
+
+\newpage
+\section{Summary}
+
+Table~\ref{tab:all-supported-boards} provides a compact summary of all
+boards currently supported by HobbySpark.
+
+\begin{table}[H]
+\centering
+\caption{HobbySpark supported boards}
+\label{tab:all-supported-boards}
+\begin{tabular}{ll}
+\toprule
+\textbf{HobbySpark Board Class} & \textbf{Microcontroller} \\
+\midrule
+AdafruitFeatherESP32S2 & ESP32-S2 \\
+AdafruitFeatherM0 & ATSAMD21 \\
+ArduinoDue & SAM3X8E \\
+ArduinoGigaR1 & STM32H747XI \\
+ArduinoLeonardo & ATmega32U4 \\
+ArduinoLilyPad & ATmega328P \\
+ArduinoMega2560 & ATmega2560 \\
+ArduinoMicro & ATmega32U4 \\
+ArduinoMini & ATmega328P \\
+ArduinoNano & ATmega328P \\
+ArduinoNanoESP32 & ESP32-S3 \\
+ArduinoNanoEvery & ATmega4809 \\
+ArduinoProMini & ATmega328P \\
+ArduinoUnoR3 & ATmega328P \\
+ArduinoUnoWiFiRev2 & ATmega4809 \\
+ArduinoZero & ATSAMD21 \\
+ESP32C3 & ESP32-C3 \\
+ESP32DevKit & ESP32 \\
+ESP32S2 & ESP32-S2 \\
+ESP32S3 & ESP32-S3 \\
+ESP8266D1Mini & ESP8266 \\
+ESP8266NodeMCU & ESP8266 \\
+RaspberryPiPico & RP2040 \\
+RaspberryPiPicoW & RP2040 \\
+STM32BlackPill & STM32 family \\
+STM32BluePill & STM32F103C8T6 \\
+SeeeduinoXIAO & ATSAMD21 \\
+SeeeduinoXIAOESP32C3 & ESP32-C3 \\
+Teensy40 & i.MX RT1062 \\
+Teensy41 & i.MX RT1062 \\
+\bottomrule
+\end{tabular}
+\end{table}

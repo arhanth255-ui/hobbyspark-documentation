@@ -1,0 +1,91 @@
+% !TeX root = ../main.tex
+\chapter{Getting started}
+\section{What is HobbySpark?}
+
+HobbySpark is a programming language and development environment
+designed for creating programs that interact with hardware such as
+microcontroller boards and electronic components.
+
+It provides a simple, readable programming language that lets you
+write programs using familiar concepts such as variables, conditions,
+loops, functions, and classes, while also providing classes designed
+specifically for working with hardware.
+
+Instead of requiring the user to deal directly with all of the
+lower-level details of hardware programming, HobbySpark provides
+higher-level objects and methods that represent the components being
+used. This allows a program to describe what it wants the hardware to
+do in a more natural way.
+
+For example, a hardware component can be represented by an object:
+
+\begin{lstlisting}
+	led = Led(6)
+\end{lstlisting}
+
+The program can then interact with that object through its methods:
+
+\begin{lstlisting}
+	led.on()
+	led.off()
+\end{lstlisting}
+
+HobbySpark is intended to make experimenting with electronics and
+programming more approachable while still allowing users to build
+increasingly complex projects.
+
+\subsection{How HobbySpark Works}
+
+From the user's point of view, the workflow is straightforward:
+
+\begin{center}
+	\textbf{Write your program}
+	$\rightarrow$
+	\textbf{Check it}
+	$\rightarrow$
+	\textbf{Build it}
+	$\rightarrow$
+	\textbf{Upload it}
+	$\rightarrow$
+	\textbf{Watch your hardware do something}
+\end{center}
+
+The user does not need to manually construct the underlying C++
+program. HobbySpark handles the conversion required by its hardware
+toolchain.
+
+\subsection{What Can You Do with HobbySpark?}
+
+HobbySpark programs can use ordinary programming features alongside
+hardware-oriented functionality. This means the same language can be
+used for both the logic of a program and the control of physical
+hardware.
+
+Some of the features available to HobbySpark programs include:
+
+\begin{itemize}
+	\item Variables and expressions
+	\item Conditions using \texttt{if}, \texttt{elif}, and
+	\texttt{else}
+	\item \texttt{while} and \texttt{for} loops
+	\item Functions
+	\item Classes and objects
+	\item \texttt{break} and \texttt{continue}
+	\item Lists and tuples
+	\item Hardware classes and their methods
+	\item Programs that continuously interact with connected
+	hardware
+\end{itemize}
+
+The goal of HobbySpark is simple: write code, connect hardware, and
+make something happen.
+
+\section{Requirements}
+You will need the following:
+\begin{enumerate}
+	\item \textbf{Computer}
+	\item \textbf{Applicable USB cable}
+	\item \textbf{HobbySpark app}
+	\item \textbf{Board}
+	\item \textbf{The required devices like LEDs, motors, and sensors}
+\end{enumerate}

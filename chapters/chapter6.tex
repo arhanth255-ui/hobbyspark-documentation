@@ -1,0 +1,71 @@
+	\chapter{Exceptions, explained}
+	\section{Introduction}
+	There are mainly 4 types of exceptions in HobbySpark:
+	\begin{itemize}
+		\item Syntax errors
+		\item Transpilation errors
+		\item Runtime errors
+		\item Compile time error
+	\end{itemize}
+	
+	Let us go through them carefully now:
+	
+	\section{Syntax errors}
+	This error means that you haven't followed the correct syntax of python. For example:
+	\begin{lstlisting}
+		if :
+		1234abcd
+	\end{lstlisting}
+	Causes a SyntaxError, or more verbosely--
+	\begin{lstlisting}[style=tracebacks]
+		Could not run:   File "<stdin>", line 1
+		if :
+		^
+		SyntaxError: invalid syntax
+	\end{lstlisting}
+	
+	\begin{notebox}
+		Syntax errors may have very less info about \emph{what} really went wrong, but you can usually figure out what is the error. If you cannot seem to be able to do so, then spend your time with your favorite LLM trying to find out what's the actual problem.
+	\end{notebox}
+	\newpage
+	\section{Transpilation errors}
+	As explained in Section~\ref{sec:syn}, HobbySpark doesn't have all the features in python, so here comes transpilation errors. Transpilation errors happen when you use a feature not implemented in HobbySpark yet. For example:
+	\begin{lstlisting}
+		a = 23
+		a+=1
+	\end{lstlisting}
+	Causes a UnsupportedNodeError, or more verbosely--
+	\begin{lstlisting}[style=tracebacks]
+		Failed to transpile code, 
+		Node VariableCompAssignNode:
+		op = ADD_COMPOUND
+		left:
+		VariableNameNode:
+		name = a
+		type = NUMBER
+		right:
+		NumberNode:
+		value = 1
+		is unsupported.
+	\end{lstlisting}
+	
+	\begin{notebox}
+		Transpilation errors don't mean you can't implement a feature, because there's always another feature that already does it, just in the long way. For example, the earlier code could be replaced with--
+		\begin{lstlisting}
+			a = 23
+			a = a + 1
+		\end{lstlisting}
+		to not give any error.
+	\end{notebox}
+	
+	\section{Runtime errors}
+	This topic is very big, therefore, we will make a new chapter called Chapter~\ref{chap:run}
+	
+	\section{Compile time errors}
+	These are errors that have come from the \code{C++} runtime. These usually don't happen. All the same, an example of error if you click yes after entering nothing for the \code{fqbn} asking prompt -- 
+	\begin{lstlisting}
+		Failed to compile, Missing FQBN (Fully Qualified Board Name)
+	\end{lstlisting}
+	\begin{tipbox}
+		Compile errors clearly define what has happened, so it is easy for us to find what went wrong.
+	\end{tipbox}

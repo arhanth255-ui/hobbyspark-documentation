@@ -1,0 +1,32 @@
+	\chapter{Code Quirks}
+	\section{Introduction}
+	HobbySpark has some small interesting quirks that people can often miss. This chapter explains all of them.
+	\section{Board selection}
+	HobbySpark currently supports 30 different boards. Therefore, you \textbf{must} use a special function called \code{set\_board}. The usage is:
+	\begin{lstlisting}
+		set_board(BoardName(), debug)
+	\end{lstlisting}
+	The first argument is your board's name(ArduinoNano, ArduinoUnoR3, etc.) and the second one gives debug output similar to:
+	\begin{lstlisting}
+		Device: Led has run fade(time=1, unit=second\seconds(1000))
+	\end{lstlisting}
+	if the argument is true.
+	
+	\section{Package inclusion}
+	The HobbySpark package isn't magically included by python. But you don't need to do the usual \code{python -m pip install package} because fortunately, the HobbySpark GUI automatically adds the package to the python PATH. You just need to put this line at the start--
+	
+	\begin{lstlisting}
+		from stub import *
+	\end{lstlisting}  
+	
+	Its tempting to do just \code{import}, but that will cause an error. Also, there are a few utilities that aren't defined in \code{C++}, which can cause an error. The parser blocks you from doing any plain imports.
+	
+	\newpage
+	\section{Pin names}
+	Pin names are just plain numbers if they are digital pins or plain numbers with an \code{A} prefixed to it. If you are accustomed to prefixing digital pins with a \code{D}, bad luck because unfortunately, HobbySpark completely rejects these and also throws a \code{InvalidPinTypeError}. Section~\ref{sec:pintyperror} explains the error and its meaning fully.
+	
+	\section{Opening projects}
+	As soon as HobbySpark launches, you will see a file explorer thing that will ask you a directory, which will be the project directory. You can always change it in the menu. 
+	
+	Unlike other popular editors like VS-code and Sublime Text, HobbySpark doesn't remember paths. So, you'll unfortunately enter in your path again and again as you open the app.
+    

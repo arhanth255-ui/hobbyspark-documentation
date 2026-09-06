@@ -1,0 +1,354 @@
+\chapter{Runtime errors}
+	\label{chap:run}
+	\section{Introduction}
+	Runtime errors are errors that happen before any parsing, lexing or transpiling ever happens. Python reports these errors and HobbySpark catches that report and in turn informs the user about it. There are many runtime errors already built onto python. All the predefined errors in python are given below: 
+	\begin{itemize}
+		\item \textbf{SyntaxError} -- The Python code does not follow valid syntax.
+		\item \textbf{IndentationError} -- The indentation of the code is incorrect.
+		\item \textbf{TabError} -- Tabs and spaces are mixed inconsistently for indentation.
+		\item \textbf{NameError} -- A variable or name is used before it has been defined.
+		\item \textbf{TypeError} -- An operation or function is used with an inappropriate type.
+		\item \textbf{ValueError} -- A function receives the correct type but an invalid value.
+		\item \textbf{IndexError} -- A sequence is accessed using an index that does not exist.
+		\item \textbf{KeyError} -- A dictionary is accessed using a key that does not exist.
+		\item \textbf{AttributeError} -- An object does not have the requested attribute or method.
+		\item \textbf{ImportError} -- A requested module or name cannot be imported.
+		\item \textbf{ModuleNotFoundError} -- The requested module cannot be found.
+		\item \textbf{ZeroDivisionError} -- A number is divided by zero.
+		\item \textbf{FileNotFoundError} -- A requested file or directory cannot be found.
+		\item \textbf{PermissionError} -- The operation does not have sufficient permission.
+		\item \textbf{RecursionError} -- The maximum recursion depth is exceeded.
+		\item \textbf{MemoryError} -- The program cannot allocate enough memory.
+		\item \textbf{RuntimeError} -- An error occurs that does not fit another specific category.
+		\item \textbf{NotImplementedError} -- An operation or method has not been implemented.
+		\item \textbf{AssertionError} -- An \texttt{assert} statement evaluates to false.
+		\item \textbf{EOFError} -- Input is requested but the end of the input stream is reached.
+		\item \textbf{KeyboardInterrupt} -- The user interrupts the program, usually with \texttt{Ctrl+C}.
+		\item \textbf{SystemExit} -- The program requests that Python terminate execution.
+		\item \textbf{UnboundLocalError} -- A local variable is referenced before it has been assigned a value.
+		\item \textbf{StopIteration} -- An iterator has no more values to produce.
+		\item \textbf{UnicodeError} -- A Unicode-related encoding or decoding operation fails.
+	\end{itemize}
+	However, there are still many HobbySpark specific errors, which are explained below:
+	\section{PinNotApplicableError} 
+	It means the pin you have given does not have the correct specifications for the use case. For example: 
+	\begin{lstlisting} 
+		from stub import * 
+		set_board(ArduinoNano()) 
+		led = Led("A1") 
+		led.fade(1, SEC) 
+	\end{lstlisting} 
+	gives a error-- 
+	\begin{lstlisting}[style=tracebacks] 
+		Traceback (most recent call last): 
+		File "<stdin>", line 4, in <module> 
+		led.fade(1, SEC) 
+		~~~~~~~~^^^^^^^^ 
+		File "<stub path>", line 76, in fade 
+		raise PinNotApplicableError(self.pin.pinname, "non PWM", "PWM") 
+		stub.Errors.PinNotApplicableError: [Error number: 0.0.0]Error: An non PWM pin(A1) was used where PWM was needed. 
+		Hint: Use a PWM pin for this device. 
+		__________________________________________ 
+		Remember, Errors are part of the process.  
+		Each one helps you understand your code better. 
+		Something went wrong -- that is okay. 
+		Every error is a step toward a better program. 
+		__________________________________________ 
+		If the traceback worried you, do not worry, it will lead you to the exact place the error happend. 
+		If the traceback ends with line numbers that are not yours they are usually just raise statements in the module. 
+		__________________________________________ 
+		
+	\end{lstlisting} 
+	
+	It happens for: 
+	\begin{enumerate} 
+		\item PWM pin not given 
+		\item Digital pin given where analog needed 
+	\end{enumerate} 
+	\newpage 
+	
+	\section{PinOutOfRangeError} 
+	It means the pin you have given is outside the valid pin range of the current board. For example: 
+	\begin{lstlisting} 
+		from stub import * 
+		set_board(ArduinoNano()) 
+		led = Led("366") 
+	\end{lstlisting} 
+	gives an error-- 
+	\begin{lstlisting}[style=tracebacks] 
+		Traceback (most recent call last): 
+		File "<stdin>", line 3, in <module> 
+		led = Led("366") 
+		File "<stdin>", line 40, in **init** 
+		self.pin=Pin(pin,"both") 
+		~~~^^^^^^^^^^^^ 
+		File "<stdin>", line 102, in **init** 
+		raise PinOutOfRangeError(pin,Boards.CURRENTBOARD) 
+		stub.Errors.PinOutOfRangeError: [Error number: 0.0.1]Pin 366 was used when the valid pin range is 0-A7 
+		__________________________________________ 
+		Remember, Errors are part of the process. Each one helps you understand your code better. 
+		Something went wrong -- that's okay. 
+		Every error is a step toward a better program. 
+		__________________________________________ 
+		If the traceback worried you, don't worry, it will lead you to the exact place the error happend. 
+		If the traceback ends with line numbers that are not yours they are usually just raise statements in the module. 
+		__________________________________________ 
+	\end{lstlisting} 
+	
+	
+	It happens when: 
+	\begin{enumerate} 
+		\item A pin name outside the valid range of the current board is given. 
+	\end{enumerate} 
+	\newpage 
+	
+	\section{InvalidPinTypeError} 
+	\label{sec:pintyperror}
+	It means the pin string you have given contains an invalid or unrecognized pin name. For example: 
+	\begin{lstlisting} 
+		from stub import * 
+		set_board(ArduinoNano()) 
+		led = Led("366df") 
+	\end{lstlisting} 
+	gives an error-- 
+	\begin{lstlisting}[style=tracebacks] 
+		Traceback (most recent call last): 
+		File "<stdin>", line 3, in <module> 
+		led = Led("366df") 
+		File "<stdin>", line 40, in **init** 
+		self.pin=Pin(pin,"both") 
+		~~~^^^^^^^^^^^^ 
+		File "<stdin>", line 98, in **init** 
+		self.raw_pin,mode=pin_value(pin,True) 
+		~~~~~~~~~^^^^^^^^^^ 
+		File "<stdin>", line 43, in pin_value 
+		raise InvalidPinTypeError(pin,pins_in_dic) 
+		stub.Errors.InvalidPinTypeError: [Error number: 0.0.2]Error: Pinname 366df is not a valid pinname 
+		Hint: Use only pinnames like 0,1,2,3,4,5,6,7,8,9,10,11,12,13,A0,A1,A2,A3,A4,A5,A6,A7 
+		__________________________________________ 
+		Remember, Errors are part of the process. Each one helps you understand your code better. 
+		Something went wrong -- that's okay. 
+		Every error is a step toward a better program. 
+		__________________________________________ 
+		If the traceback worried you, don't worry, it will lead you to the exact place the error happend. 
+		If the traceback ends with line numbers that are not yours they are usually just raise statements in the module. 
+		__________________________________________ 
+	\end{lstlisting} 
+	
+	
+	It happens when: 
+	\begin{enumerate} 
+		\item A pin string contains characters that are not allowed in a valid pin name. 
+		\item A pin name that does not match any valid pin name is given. 
+		\item Nonsense or malformed pin names are given, such as \texttt{366df}. 
+	\end{enumerate} 
+	\newpage 
+	
+	\section{PinAlreadyInUseError} 
+	It means the pin you have given is already being used by another device. For example: 
+	\begin{lstlisting} 
+		from stub import * 
+		set_board(ArduinoNano()) 
+		led = Led("3") 
+		Button("3") 
+	\end{lstlisting} 
+	gives an error-- 
+	\begin{lstlisting}[style=tracebacks] 
+		Traceback (most recent call last): 
+		File "<stdin>", line 4, in <module> 
+		Button("3") 
+		~~~~~~^^^^^ 
+		File "<stdin>", line 30, in __init__ 
+		self.buttonpin=Pin(pin) 
+		~~~^^^^^ 
+		File "<stdin>", line 104, in __init__ 
+		raise PinAlreadyInUseError(self.raw_pin) 
+		stub.Errors.PinAlreadyInUseError: [Error number: 0.0.3]Error: Pin 3 is already in use. 
+		Hint: Use other pins for this device 
+		__________________________________________ 
+		Remember, Errors are part of the process. Each one helps you understand your code better. 
+		Something went wrong -- that's okay. 
+		Every error is a step toward a better program. 
+		__________________________________________ 
+		If the traceback worried you, don't worry, it will lead you to the exact place the error happend. 
+		If the traceback ends with line numbers that are not yours they are usually just raise statements in the module. 
+		__________________________________________ 
+	\end{lstlisting} 
+	
+	It happens when: 
+	\begin{enumerate} 
+		\item A pin that is already being used by another device is given to a new device. 
+		\item Two devices attempt to use the same pin at the same time. 
+	\end{enumerate} 
+	\newpage 
+	
+	\section{InvalidArgumentError} 
+	It means an invalid argument was given to a function, method, or constructor. The argument may have the wrong type or otherwise not meet the requirements of the function, method, or constructor. For example: 
+	\begin{lstlisting} 
+		from stub import * 
+		set_board(ArduinoNano) 
+	\end{lstlisting} 
+	gives an error-- 
+	\begin{lstlisting}[style=tracebacks] 
+		Traceback (most recent call last): 
+		File "<stdin>", line 2, in <module> 
+		set_board(ArduinoNano) 
+		~~~~~~~~~^^^^^^^^^^^^^ 
+		File "<stdin>", line 123, in set_board 
+		raise InvalidArgumentError(board,"Board","class") 
+		stub.Errors.InvalidArgumentError: [Error number: 0.1]Error: Argument '<class 'stub.board_dat.arduinos.ArduinoNano'>' was used where an argument of class Board was needed. 
+		Hint: Use an argument of class Board for this function. 
+		__________________________________________ 
+		Remember, Errors are part of the process. Each one helps you understand your code better. 
+		Something went wrong -- that's okay. 
+		Every error is a step toward a better program. 
+		__________________________________________ 
+		If the traceback worried you, don't worry, it will lead you to the exact place the error happend. 
+		If the traceback ends with line numbers that are not yours they are usually just raise statements in the module. 
+		__________________________________________ 
+	\end{lstlisting} 
+	
+	It happens when: 
+	\begin{enumerate} 
+		\item An argument of the wrong type is given to a function, method, or constructor. 
+		\item An argument does not meet the requirements of the function, method, or constructor. 
+		\item An invalid argument is supplied where a specific type, value, or other specification is required. 
+	\end{enumerate} 
+	\newpage 
+	
+	\section{BoardNotInitializedFirstError} 
+	It means that the board has not been initialized before a device is used. The \texttt{set\_board()} function must be called before creating or using devices. For example: 
+	\begin{lstlisting} 
+		from stub import * 
+		led = Led("3") 
+	\end{lstlisting} 
+	gives an error-- 
+	\begin{lstlisting}[style=tracebacks] 
+		Traceback (most recent call last): 
+		File "<stdin>", line 2, in <module> 
+		led = Led("3") 
+		File "<stdin>", line 40, in __init__ 
+		self.pin=Pin(pin,"both") 
+		~~~^^^^^^^^^^^^ 
+		File "<stdin>", line 97, in __init__ 
+		board_check() 
+		~~~~~~~~~~~^^ 
+		File "<stdin>", line 8, in board_check 
+		raise BoardNotInitializedFirstError() 
+		stub.Errors.BoardNotInitializedFirstError: [Error number: 0.2.0]Error: Please initialize the board before your code. 
+		Hint: Use the 'set_board()' function to select your board. 
+		__________________________________________ 
+		Remember, Errors are part of the process. Each one helps you understand your code better. 
+		Something went wrong -- that's okay. 
+		Every error is a step toward a better program. 
+		__________________________________________ 
+		If the traceback worried you, don't worry, it will lead you to the exact place the error happend. 
+		If the traceback ends with line numbers that are not yours they are usually just raise statements in the module. 
+		__________________________________________ 
+	\end{lstlisting} 
+	
+	It happens when: 
+	\begin{enumerate} 
+		\item The \texttt{set\_board()} function has not been called before creating or using a device. 
+		\item A device is used before a board has been selected. 
+	\end{enumerate} 
+	\newpage
+	\section{DeviceNotCompatibleWithCurrentBoardError}
+	
+	\textbf{Meaning:} This error is a placeholder for situations where a device is not compatible with the currently selected board. At the moment, this error is reserved for future device support.\\
+	
+	\textbf{Current status:} This error is not currently used by the library. It will be used when devices that require specific board support are added.\\
+	
+	\textbf{Example devices:} One possible example is an EEPROM device. When EEPROM support is implemented, attempting to use an EEPROM with a board that does not support it could raise this error.\\
+	
+	\textbf{It happens when:}
+	
+	
+	\begin{enumerate}
+		\item A device is used with a board that does not support that device.
+		\item A device requires hardware features that are unavailable on the selected board.
+		\item A device is supported only on specific boards and is used with an incompatible board.
+	\end{enumerate}
+	
+	\begin{notebox}
+		This error is currently a placeholder and may become active as more devices and board-specific features are added to the library.
+	\end{notebox}
+	\newpage
+	
+	\section{MicroControllerError}
+	This is the parent class of all errors and usually \textbf{never ever} happens. However, a experimental feature, custom boards, which are unfortunately not supported in \code{v1.0.0}, when not given a \code{setup} function overload, will raise this error.
+	
+	\section{The error hierarchy} 
+	The errors, like any good programming language or platform, has a hierarchical structure with parents and children. Each error always has a parent except for the highest one, the MicroControllerError.
+	
+	A hierarchical tree of the errors is showed in Tree~\ref{tree:error-hierarchy}
+	\begin{figure}[H]
+		\centering
+		
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{forest}
+				for tree={
+					grow'=south,
+					draw,
+					rounded corners,
+					align=center,
+					font=\small,
+					minimum height=8mm,
+					edge={->},
+					parent anchor=south,
+					child anchor=north,
+					l sep=12mm,
+					s sep=4mm,
+				}
+				[\texttt{MicroControllerError}
+				[\texttt{PinError}
+				[\shortstack{\texttt{PinNotApplicable}\\\texttt{Error}}]
+				[\shortstack{\texttt{PinOutOfRange}\\\texttt{Error}}]
+				[\shortstack{\texttt{InvalidPinType}\\\texttt{Error}}]
+				[\shortstack{\texttt{PinAlreadyInUse}\\\texttt{Error}}]
+				]
+				[\texttt{InvalidArgumentError}]
+				[\texttt{BoardError}
+				[\texttt{BoardNotDefinedError}]
+				[\shortstack{\texttt{BoardNotInitialized}\\\texttt{FirstError}}]
+				]
+				[\shortstack{\texttt{DeviceNotCompatible}\\
+					\texttt{WithCurrentBoard}\\
+					\texttt{Error}}]
+				]
+			\end{forest}
+		\end{adjustbox}
+		
+		\caption{HobbySpark Error Hierarchy}
+		\label{tree:error-hierarchy}
+		
+	\end{figure}
+	
+	\begin{notebox}
+		\setlength{\parindent}{1.5em}
+		Remember, errors are not the end of the story. Great personalities have said--
+		
+		\vspace{1.0cm}
+		
+		``A person who never made a mistake never tried anything new.''
+		
+		\begin{flushright}
+			--- Albert Einstein
+		\end{flushright}
+		
+		``FAIL means First Attempt In Learning.''
+		
+		\begin{flushright}
+			--- A. P. J. Abdul Kalam
+		\end{flushright}
+		
+		Errors are some of the most useful things you will encounter as a programmer.	Yes, they can be annoying. You write what you think is perfectly good code, run the program, and suddenly the computer throws an error at you. But think	about what would happen if errors simply did not exist. Code that is completely wrong in its meaning could quietly continue running and eventually make its way	into a real application. A program might look perfectly fine to the compiler and still do something that makes absolutely no sense. Errors are what make us stop, look at the problem, and ask ourselves, \textit{``Wait, what did I just do?''} They give us a chance to catch our mistakes before our users do.
+		
+		And honestly, every programmer has had that moment. You stare at your code and	think, \textit{``There is no way I could have written something this ridiculous.''} Then you look at it again and realize that, yes, you absolutely did. That is	not something to be ashamed of; it is simply part of programming. Every error teaches you something about your program and, quite often, something about how you think. Many programmers would probably admit that they would not be half the programmers they are today without the errors they made along the way.
+		
+		
+		So the next time your program throws an error, don't immediately think that
+		everything has gone wrong. Take a breath, read what it is telling you, and
+		start investigating. The error may actually be the thing that saves your
+		program from becoming a much bigger problem later.
+	\end{notebox}
