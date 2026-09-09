@@ -1,22 +1,22 @@
 % !TeX root = ../main.tex
 \chapter{User side framework}
 \section{Introduction}
-We have learnt about the GUI, but what about the actual code? This is the exact thing we are learning here.
+We have learnt about the GUI, but what about the actual code? This chapter fully explains the HobbySpark API so that you can write code that actually \emph{works}.
 
 \section{A brief note on syntax}
 \label{sec:syn}
-The syntax of HobbySpark code is intentionally very close to python. However, only the following features of python are included in HobbySpark v1.0.0:
+The syntax of HobbySpark code is intentionally very close to Python. However, only the following features of Python are included in HobbySpark v1.0.0:
 \begin{itemize}
-	\item Variables
+	\item Variables (note that type annotations do not work, types are either semantically found out or the variable type is put as \code{auto} while generation of \code{C++} code)
 	\item \texttt{if}, \texttt{elif}, and \texttt{else} conditionals
-	\item \texttt{while} and \texttt{for} loops(for loops only applicable for range)
+	\item \texttt{while} and \texttt{for} loops (for loops are \emph{only} applicable for range)
 	\item Functions
-	\item Classes with constructors and operator overloading(with explicit return types)
-	\item All python basic types (\texttt{bool}, \texttt{int}, \texttt{float} and \texttt{str})
+	\item Classes with constructors and operator overloading (with explicit return types, which is not required in normal Python, but it is a HobbySpark specific )
+	\item All the basic Python types (\texttt{bool}, \texttt{int}, \texttt{float} and \texttt{str})
 	\item \texttt{break} and \texttt{continue}
 \end{itemize}
 \begin{warningbox}
-	HobbySpark doesn't support all python features. So writing code with features HobbySpark does not support may end up giving you an error.
+	HobbySpark doesn't support all Python features. So writing code with features HobbySpark does not support may end up giving you an error.
 \end{warningbox}
 
 \section{Classes and Hardware Objects}
@@ -77,8 +77,10 @@ It requires one argument:
 Example usage:
 
 \begin{lstlisting}
-	button = Button("D2")
-	
+	button = Button("2")
+	def on_press():
+        pass
+        # Put your code here
 	button.when_read(on_pressed)
 \end{lstlisting}
 
@@ -101,7 +103,7 @@ Methods:
 \subsection{I2C\_LCD\_Display}
 
 Class for controlling an I2C LCD display.\\
-It requires four arguments and accepts an optional address:
+It requires four arguments and accepts a fifth argument, an optional address, which if not given, will be evaluated as the address \code{0x240}:
 
 \begin{enumerate}
 	\item \texttt{sda} --- The SDA pin.
@@ -250,7 +252,7 @@ It requires three arguments:
 Example usage:
 
 \begin{lstlisting}
-	led = RGBled(3, 5, 6)
+	led = RGBLed(3, 5, 6)
 	
 	led.set(100, 0, 0)
 	
@@ -348,7 +350,7 @@ It requires two arguments:
 Example usage:
 
 \begin{lstlisting}
-	sensor = UltrasonicSensor("D6", "D7")
+	sensor = UltrasonicSensor("6", "7")
 	
 	distance = sensor.distance()
 	
@@ -402,8 +404,8 @@ button reads and potentiometer reads to run during the waiting period.
     \item \texttt{InvalidArgumentError} is raised if \texttt{time} is not an
     \texttt{int} or \texttt{float}.
     
-    \item \texttt{InvalidArgumentError} is raised if \texttt{unit} is not an
-    \texttt{int}.
+    \item \texttt{InvalidArgumentError} is raised if \texttt{unit} is not a
+    \texttt{float}.
 \end{itemize}
 
 
@@ -413,7 +415,7 @@ The \texttt{stop()} function completely blocks the microcontroller for the
 specified amount of time. During this period, the microcontroller does not
 perform other operations.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}
 stop(time, unit=MS) -> None
 \end{lstlisting}
 
@@ -439,8 +441,8 @@ this period.
     \item \texttt{InvalidArgumentError} is raised if \texttt{time} is not an
     \texttt{int} or \texttt{float}.
     
-    \item \texttt{InvalidArgumentError} is raised if \texttt{unit} is not an
-    \texttt{int}.
+    \item \texttt{InvalidArgumentError} is raised if \texttt{unit} is not a
+    \texttt{float}.
 \end{itemize}
 
 \newpage
@@ -451,17 +453,15 @@ throughout a program for timing and musical-note frequencies.
 
 \subsection{\texttt{MS}}
 
-\begin{lstlisting}[language=C++]
-float MS = 1;
-\end{lstlisting}
+
 
 \texttt{MS} represents milliseconds. It has the value \texttt{1}, so a
 value multiplied by \texttt{MS} remains in milliseconds.
 
 For example:
 
-\begin{lstlisting}[language=C++]
-stop(500, MS);
+\begin{lstlisting}
+stop(500, MS)
 \end{lstlisting}
 
 pauses execution for 500 milliseconds.

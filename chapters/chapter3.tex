@@ -15,11 +15,11 @@ The main window of HobbySpark is shown in Fig~\ref{fig:window}.
 All the buttons and their uses are explained below.
 
 \subsection{Upload}
-Uploads the code to the microcontroller, after asking board name and COM port.
+Uploads the code to the microcontroller, after asking for the board name and COM port.
 \subsection{Test}
-Goes through the whole process until compilation; it does not upload. The board name however will be asked.
+Goes through the whole process until compilation; it does not upload. The board name, however,  will be asked.
 \subsection{Transpile check}
-Tests the program out until transpilation step. Will not ask anything.
+This button runs the code through the transpiler without asking anything. It helps you to find out whether an error happens before or \emph{after} the actual transpilation step.
 \subsection{Run}
 Runs the script using the standard \texttt{python filename}. Will not ask anything.
 \subsection{Serial monitor}
@@ -30,13 +30,13 @@ Clears the console.
 \subsection{Lex}
 Tokenizes the program completely and gives the token list as output for curious users.
 \subsection{Parse}
-Opens a new window that shows the whole program structure in a tree like structure.
+Opens a new window that shows the whole program structure in a tree-like structure.
 \subsection{Transpile}
 Transpiles and shows the complete transpiled C++ code.
 
 \section{Interesting features}
 \subsection{Birthday wishing}
-\textcolor{red}{YES}, HobbySpark has a builtin birthday wishing system. It features a small window popup and playing of a non-copyrighted "Happy Birthday To You" song.
+\textcolor{red}{YES}, HobbySpark has a built-in birthday wishing system. It features a small window popup and playing of a "Happy Birthday To You" song that's in the public-domain.
 \subsection{Auto board and COM port fill-up}
 Tired of selecting boards and COM ports? Well, fear no more cause we have a file called \texttt{settings.json} in which you can put the default COM port and board. Note that while putting the default values, the value should match exactly to what you get in the drop-down menu, or it may crash unexpectedly.
 
@@ -48,6 +48,7 @@ The \texttt{file} menu may be used to create new projects and also open existing
 	\item COMPILATION/main.py/package.h
 	\item settings.json
 \end{itemize}
+Note that main.py is both a file \emph{and} a folder. The folder contains the generated code and the HobbySpark package, while the file contains the actual python code that you write.
 
 
 Also note that the COMPILATION directory is auto-generated \emph{after} at least 1 test or upload process has been completed without errors.
